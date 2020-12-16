@@ -1,0 +1,20 @@
+---
+- name: "Playing with ansible"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Update system"
+      become: true
+      apt:
+        update_cache: true
+    - name: "Upgrade system"
+      become: true
+      apt:
+        upgrade: true
+    # register: "output"
+
+    # - name: "Upgrade system"
+    #   shell: "apt upgrade"
+    #   become: true
+    #   register: "output"
+    - debug: var=output.stdout_lines
