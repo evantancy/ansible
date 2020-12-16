@@ -3,6 +3,8 @@
   hosts: localhost
   connection: local
   tasks:
+  
+    # Can't update and upgrade in the same task due to dpkg being locked up
     - name: "Update system"
       become: true
       apt:
