@@ -1,0 +1,6 @@
+---
+- name: "Executing playbook.yml"
+  hosts: localhost
+  become: true
+  roles:
+    - common
