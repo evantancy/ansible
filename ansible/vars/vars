@@ -1,0 +1,5 @@
+ros_versions:
+  trusty: indigo
+  xenial: kinetic
+  bionic: melodic
+

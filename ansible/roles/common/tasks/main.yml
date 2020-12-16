@@ -1,16 +1,14 @@
-- name: "Install git"
-  apt: pkg=git state=present
-- name: "Install vim"
-  apt: pkg=vim state=present
-- name: "Install terminator"
-  apt: pkg=terminator state=present
-- name: "Install net-tools"
-  apt: pkg=net-tools state=present
-- name: "Install gcc"
-  apt: pkg=gcc state=present
-- name: "Install curl"
-  apt: pkg=curl state=present
-- name: "Install htop"
-  apt: pkg=htop state=present
-- name: "Install x11-apps"
-  apt: pkg=x11-apps state=present
+- name: "Install common packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - terminator
+    - vim
+    - net-tools
+    - gcc
+    - curl
+    - htop
+# - name: "Adding lines to .bashrc"
+#   lineinfile: name=~/.bashrc line="asdfgh"
