@@ -1,2 +1,0 @@
-- name: "Install CUDA"
-  apt: pkg=cuda-11-0 state=present

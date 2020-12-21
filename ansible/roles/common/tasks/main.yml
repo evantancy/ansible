@@ -10,5 +10,4 @@
     - gcc
     - curl
     - htop
-# - name: "Adding lines to .bashrc"
-#   lineinfile: name=~/.bashrc line="asdfgh"
+  
