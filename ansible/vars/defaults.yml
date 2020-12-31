@@ -1,2 +1,3 @@
 ---
 home_dir: "{{ ansible_env.HOME }}"
+install_dir: "{{ home_dir }}/install_dir"

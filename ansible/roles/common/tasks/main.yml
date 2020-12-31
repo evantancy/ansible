@@ -1,5 +1,6 @@
-- name: Install some common apt packages
-  become_user: yes
+- name: Install some common APT packages
+  become: true
+  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -11,6 +12,91 @@
     - gcc
     - curl
     - htop
+    - python
+    - python-pip
+    - python3
+    - python3-pip
+
+- name: Add Git PPA
+  apt_repository:
+    repo: "{{ ppa_git }}"
+    state: present
+    update_cache: true
+
+- name: Disable unattended updates 1
+  become: true
+  become_method: sudo
+  lineinfile:
+    path: /etc/apt/apt.conf.d/10periodic
+    regexp: ^APT::Periodic::Update-Package-Lists
+    line: APT::Periodic::Update-Package-Lists "0";;
+
+- name: Disable unattended updates 2
+  become: true
+  become_method: sudo
+  lineinfile:
+    path: /etc/apt/apt.conf.d/20auto-upgrades
+    regexp: ^APT::Periodic::Update-Package-Lists
+    line: APT::Periodic::Update-Package-Lists "0";
+
+- name: Disable unattended upgrades
+  become: true
+  become_method: sudo
+  lineinfile:
+    path: /etc/apt/apt.conf.d/20auto-upgrades
+    regexp: ^APT::Periodic::Unattended-Upgrade
+    line: APT::Periodic::Unattended-Upgrade "0";
+
+- name: Remove unattended-upgrades APT package
+  become: true
+  become_method: sudo
+  apt:
+    name: unattended-upgrades
+    state: absent
+
+- name: Remove dpkg lock
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /var/lib/apt/lists/lock
+    - /var/cache/apt/archives/lock
+    - /var/lib/dpkg/lock
+    - /var/lib/dpkg/lock-frontend
+
+- name: Run dpkg --configure -a
+  become: true
+  become_method: sudo
+  command: dpkg --configure -a
+
+- name: Update and upgrade APT packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Ensure Git is upgraded
+  apt:
+    name: git
+    state: latest
+  register: upgrade_git_status
+  until: upgrade_git_status is success
+  delay: 1
+  retries: 5
+
+- name: Upgrade python3 pip
+  pip:
+    name: pip
+    executable: pip3
+    extra_args: --upgrade
+
+- name: Upgrade python2 pip
+  pip:
+    name: pip
+    executable: pip2
+    extra_args: --upgrade
 
 - name: Ensure bash history has time stamps
   lineinfile:
@@ -19,6 +105,20 @@
     state: present
     backup: no
     insertafter: EOF
+
+- name: Enabling ttyUSB0 permissions
+  become: true
+  become_method: sudo
+  lineinfile:
+    path: "/etc/udev/rules.d/60-extra-acl.rules"
+    line: KERNEL=="ttyUSB0", TAG+="udev-acl", TAG+="uaccess"
+    state: present
+    create: yes
+
+- name: "Creating installation directory at {{ install_dir }}"
+  file:
+    path: "{{ install_dir }}"
+    state: directory
 
 - name: Store lsb_release -sc in variable
   shell: lsb_release -sc
