@@ -1,4 +1,5 @@
-- name: "Install common packages"
+- name: Install some common apt packages
+  become_user: yes
   apt:
     name: "{{ item }}"
     state: present
@@ -10,4 +11,18 @@
     - gcc
     - curl
     - htop
-  
+
+- name: Ensure bash history has time stamps
+  lineinfile:
+    path: "{{ home_dir }}/.bashrc"
+    line: HISTTIMEFORMAT="%d/%m/%y %T "
+    state: present
+    backup: no
+    insertafter: EOF
+
+- name: Store lsb_release -sc in variable
+  shell: lsb_release -sc
+  register: ubuntu_ver
+
+- name: Test ros_distribution dict
+  debug: msg="ROS Distribution should be {{ ros_distribution[ubuntu_ver.stdout] }}"

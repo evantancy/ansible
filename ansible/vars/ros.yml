@@ -1,0 +1,6 @@
+---
+ros_distribution:
+  "trusty": "indigo"
+  "xenial": "kinetic"
+  "bionic": "melodic"
+  "focal": "noetic"

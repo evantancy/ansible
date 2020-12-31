@@ -1,30 +1,8 @@
-# - name: "Checking for CUDA lines in ~/.bashrc"
-#   shell: grep -F ~/.bashrc -e "export PATH=\"/usr/local/cuda"
-#   # cat ~/.bashrc | tr -d '"' | grep 'export PATH=/usr/local/cuda'
-#   register: GREP_BASHRC_CUDA
-
-# - debug: msg="{{GREP_BASHRC_CUDA.stdout}}"
-
-# - name: "Adding CUDA lines to ~/.bashrc"
-#   lineinfile: path="~/.bashrc" line="export PATH=\"/usr/local/cuda-11.0/bin:$PATH\""
-#   when: GREP_BASHRC_CUDA.stdout == FALSE
-
-# # - name: "Install CUDA"
-# #   apt: pkg=cuda-11-0 state=present
-
-- name: Ensure ~/.bashrc contains ...
-  lineinfile:
-    path: ~/.bashrc
-    regexp: "export\ PATH=\"/usr/local/cuda"
-    state: absent
-  check_mode: yes
-  changed_when: false
-  register: out
-
-- debug:
-    msg: "Yes, line exists."
-  when: out.found
-
-- debug:
-    msg: "Line does NOT exist."
-  when: not out.found
+- name: Ensure CUDA folders are added to $PATH
+  blockinfile:
+    path: "{{ home_dir }}/.bashrc"
+    marker: "# {mark} CUDA TOOLKIT SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      export PATH="/usr/local/cuda/bin:$PATH"
+      export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+      export LD_LIBRARY_PATH="/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"

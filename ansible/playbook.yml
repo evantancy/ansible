@@ -1,7 +1,11 @@
 ---
-- name: "Executing playbook.yml"
+- name: Executing playbook.yml
   hosts: localhost
-  become: true
+  # become: true
+  vars_files:
+    - vars/defaults.yml
+    - vars/ros.yml
+    - vars/cuda.yml
   roles:
     - common
     - cuda
