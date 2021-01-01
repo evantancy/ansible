@@ -1,4 +1,4 @@
-- name: Install some common APT packages
+- name: Install some common apt packages
   become: true
   become_method: sudo
   apt:
@@ -10,72 +10,32 @@
     - vim
     - net-tools
     - gcc
+    - wget
     - curl
+    - tlp
     - htop
     - python
     - python-pip
     - python3
     - python3-pip
 
-- name: Add Git PPA
+- name: Add apt repo for git
   apt_repository:
     repo: "{{ ppa_git }}"
     state: present
     update_cache: true
+  notify:
+    - remove_apt_lock
+    - remove_dpkg_lock
+    - disable_unattended_updates
+    - disable_unattended_upgrades
+    - remove_unattended_upgrades
+    - apt_update_upgrade
 
-- name: Disable unattended updates 1
-  become: true
-  become_method: sudo
-  lineinfile:
-    path: /etc/apt/apt.conf.d/10periodic
-    regexp: ^APT::Periodic::Update-Package-Lists
-    line: APT::Periodic::Update-Package-Lists "0";;
-
-- name: Disable unattended updates 2
-  become: true
-  become_method: sudo
-  lineinfile:
-    path: /etc/apt/apt.conf.d/20auto-upgrades
-    regexp: ^APT::Periodic::Update-Package-Lists
-    line: APT::Periodic::Update-Package-Lists "0";
-
-- name: Disable unattended upgrades
-  become: true
-  become_method: sudo
-  lineinfile:
-    path: /etc/apt/apt.conf.d/20auto-upgrades
-    regexp: ^APT::Periodic::Unattended-Upgrade
-    line: APT::Periodic::Unattended-Upgrade "0";
-
-- name: Remove unattended-upgrades APT package
-  become: true
-  become_method: sudo
-  apt:
-    name: unattended-upgrades
-    state: absent
-
-- name: Remove dpkg lock
-  become: true
-  become_method: sudo
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - /var/lib/apt/lists/lock
-    - /var/cache/apt/archives/lock
-    - /var/lib/dpkg/lock
-    - /var/lib/dpkg/lock-frontend
-
-- name: Run dpkg --configure -a
-  become: true
-  become_method: sudo
-  command: dpkg --configure -a
-
-- name: Update and upgrade APT packages
-  become: true
-  apt:
-    upgrade: yes
-    update_cache: yes
+# - name: Run dpkg --configure -a
+#   become: true
+#   become_method: sudo
+#   command: dpkg --configure -a
 
 - name: Ensure Git is upgraded
   apt:
