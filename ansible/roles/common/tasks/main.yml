@@ -84,5 +84,9 @@
   shell: lsb_release -sc
   register: ubuntu_ver
 
+- name: Set ubuntu_ver fact
+  set_fact:
+    ubuntu_ver: "{{ ubuntu_ver.stdout }}"
+
 - name: Test ros_distribution dict
-  debug: msg="ROS Distribution should be {{ ros_distribution[ubuntu_ver.stdout] }}"
+  debug: msg="ROS Distribution should be {{ ros_distribution[ubuntu_ver] }}"
