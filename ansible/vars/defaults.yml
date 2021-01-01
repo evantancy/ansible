@@ -1,3 +1,6 @@
 ---
 home_dir: "{{ ansible_env.HOME }}"
 install_dir: "{{ home_dir }}/install_dir"
+eigen_ver: "3.3.9"
+eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
+eigen_url: "https://gitlab.com/libeigen/eigen/-/archive/{{ eigen_ver }}/{{ eigen_file }}"

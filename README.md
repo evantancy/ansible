@@ -6,6 +6,14 @@ Run the playbook in verbose mode using the following:
 ansible-playbook -v -K playbook.yml
 ```
 
+To view all Ansible related variales for a specific host run:
+```bash
+ansible -m setup hostname
+# e.g. for localhost
+ansible -m setup localhost
+```
+
+
 # Roles included
 - common:
     - install some common APT packages
@@ -15,11 +23,11 @@ ansible-playbook -v -K playbook.yml
     - Create ~/install_dir to prevent clutter
 - cuda:
     - add CUDA related paths to ~/.bashrc
+- cmake:
+- eigen:
 
 # TODO
 ## Roles
-- cmake
-- eigen
 - cudnn
 - tensorRT
 - julia
