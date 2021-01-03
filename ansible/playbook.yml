@@ -4,12 +4,8 @@
   # become: true
   vars_files:
     - vars/defaults.yml
-    - vars/ros.yml
-    - vars/cuda.yml
-    - vars/ppa.yml
-    - vars/apt_repos.yml
   roles:
     - common
-    - cuda
+    # - cuda
     - cmake
     - eigen

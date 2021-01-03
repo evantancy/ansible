@@ -1,6 +1,23 @@
 ---
 home_dir: "{{ ansible_env.HOME }}"
 install_dir: "{{ home_dir }}/install_dir"
+
 eigen_ver: "3.3.9"
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
 eigen_url: "https://gitlab.com/libeigen/eigen/-/archive/{{ eigen_ver }}/{{ eigen_file }}"
+
+# RoS Distribution lookup
+ros_distribution:
+  "trusty": "indigo"
+  "xenial": "kinetic"
+  "bionic": "melodic"
+  "focal": "noetic"
+
+# NVIDIA driver versioncorresponding to CUDA version
+cuda_nvidia_driver:
+  "11.0": "450.51.05"
+
+# APT Repositories
+cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ ubuntu_ver }} main"
+cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ ubuntu_ver }}-rc main"
+ppa_git: "ppa:git-core/ppa"

@@ -36,6 +36,6 @@
 - name: sudo make install
   become: true
   become_method: sudo
-  shell: make install --silent
+  shell: make install --debug=basic
   args:
     chdir: "{{ install_dir }}/eigen-{{ eigen_ver }}/build/"

@@ -21,10 +21,16 @@ ansible -m setup localhost
     - add extra udev rules to elevate USB permissions
     - Remove unattended-upgrades and some other settigs to disable dpkg lock
     - Create ~/install_dir to prevent clutter
+- cmake:
+    - install CMake related APT packages
+    - obtain Kitware GPG key
+    - upgrade CMake
+- eigen:
+    - install Eigen related APT packages
+    - download & unarchive eigen tar.bz2 from gitlab into ~/install_dir
+    - create build folder, make -j, and sudo make install (printing status at the end)
 - cuda:
     - add CUDA related paths to ~/.bashrc
-- cmake:
-- eigen:
 
 # TODO
 ## Roles

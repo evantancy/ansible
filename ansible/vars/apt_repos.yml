@@ -1,3 +1,0 @@
----
-cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ ubuntu_ver }} main"
-cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ ubuntu_ver }}-rc main"

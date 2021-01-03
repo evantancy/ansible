@@ -58,21 +58,31 @@
     executable: pip2
     extra_args: --upgrade
 
-- name: Ensure bash history has time stamps
-  lineinfile:
+- name: Adding nano settings
+  blockinfile:
+    path: "{{ home_dir }}/.nanorc"
+    marker: "# {mark} USER SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      set tabsize 4
+      set tabstospaces
+      set softwrap
+    create: yes
+
+- name: Adding time stamps to bash history
+  blockinfile:
     path: "{{ home_dir }}/.bashrc"
-    line: HISTTIMEFORMAT="%d/%m/%y %T "
-    state: present
-    backup: no
-    insertafter: EOF
+    marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      HISTTIMEFORMAT="%d/%m/%y %T "
 
 - name: Enabling ttyUSB0 permissions
   become: true
   become_method: sudo
-  lineinfile:
+  blockinfile:
     path: "/etc/udev/rules.d/60-extra-acl.rules"
-    line: KERNEL=="ttyUSB0", TAG+="udev-acl", TAG+="uaccess"
-    state: present
+    marker: "# {mark} USER PERMISSION SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      KERNEL=="ttyUSB0", TAG+="udev-acl", TAG+="uaccess"
     create: yes
 
 - name: "Creating installation directory at {{ install_dir }}"
@@ -80,11 +90,11 @@
     path: "{{ install_dir }}"
     state: directory
 
-- name: Store lsb_release -sc in variable
+- name: Store $(lsb_release -sc) in variable
   shell: lsb_release -sc
   register: ubuntu_ver
 
-- name: Set ubuntu_ver fact
+- name: Set ubuntu_ver variable
   set_fact:
     ubuntu_ver: "{{ ubuntu_ver.stdout }}"
 
