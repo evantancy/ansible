@@ -89,14 +89,11 @@
   file:
     path: "{{ install_dir }}"
     state: directory
+# - name: Test ros_distribution dict
+#   debug: msg="ROS Distribution should be {{ ros_distribution[os_release] }}"
 
-- name: Store $(lsb_release -sc) in variable
-  shell: lsb_release -sc
-  register: ubuntu_ver
+# - name: Distribution
+#   debug: msg="{{ os_distro }}, {{ os_release }}"
 
-- name: Set ubuntu_ver variable
-  set_fact:
-    ubuntu_ver: "{{ ubuntu_ver.stdout }}"
-
-- name: Test ros_distribution dict
-  debug: msg="ROS Distribution should be {{ ros_distribution[ubuntu_ver] }}"
+# - name: Test dict
+#   debug: msg="{{ cuda_tk_driver["11.0"]["apt"] }}"
