@@ -8,7 +8,6 @@ os_release: "{{ ansible_distribution_release }}"
 os_kernel: "{{ ansible_kernel }}"
 arch: "{{ ansible_architecture }}"
 
-eigen_ver: "3.3.9"
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
 
 # RoS Distribution lookup
@@ -19,7 +18,6 @@ ros_distribution:
   "focal": "noetic"
 
 # NVIDIA driver versioncorresponding to CUDA version
-cuda_tk_ver: "11.0.2"
 cuda_tk_dict:
   "11.0.2":
     apt_ver: "11-0"
