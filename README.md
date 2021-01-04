@@ -27,6 +27,8 @@ ansible -m setup localhost
 
 
 # Roles included
+- check_vars:
+
 - common:
     - install some common APT packages
     - add bash history timestamps
@@ -46,6 +48,8 @@ ansible -m setup localhost
     - add CUDA related paths to ~/.bashrc
     - blacklist nouveau drivers in /etc/modprobe.d/blacklist.conf
     - install cuda, cuda toolkit and related nvidia driver
+- ros:
+- robosense:
 
 # TODO
 ## Roles
