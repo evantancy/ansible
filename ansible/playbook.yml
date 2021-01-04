@@ -12,3 +12,4 @@
     - cmake
     - eigen
     - ros
+    - robosense
