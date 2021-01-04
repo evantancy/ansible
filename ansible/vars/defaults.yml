@@ -23,8 +23,10 @@ cuda_tk_ver: "11.0.2"
 cuda_tk_dict:
   "11.0.2":
     apt_ver: "11-0"
-    apt_pkg: "cuda-{{ apt_ver }}"
     nvidia_driver: "450.51.05"
+
+cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
+cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
 
 nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 

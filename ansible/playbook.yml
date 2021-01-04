@@ -6,6 +6,6 @@
     - vars/defaults.yml
   roles:
     - common
-    # - cuda
+    - cuda
     - cmake
     - eigen
