@@ -3,8 +3,10 @@
   hosts: localhost
   # become: true
   vars_files:
+    - vars/settings.yml
     - vars/defaults.yml
   roles:
+    - check_vars
     - common
     - cuda
     - cmake
