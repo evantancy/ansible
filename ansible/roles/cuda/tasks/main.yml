@@ -1,12 +1,12 @@
 - name: Download cuda preferences file
   get_url:
-    url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
+    url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }}"
     dest: "{{ install_dir }}"
 
 - name: Add cuda preferences to apt
   become: true
   become_method: sudo
-  shell: "mv {{ install_dir }}/cuda-{{ os_distro }}{{ os_distro_ver }}.pin /etc/apt/preferences.d/cuda-repository-pin-600"
+  shell: "mv {{ install_dir }}/{{ cuda_apt_pref_pin }} /etc/apt/preferences.d/cuda-repository-pin-600"
 
 - name: Check if local deb installer exists
   stat:
@@ -35,15 +35,15 @@
   notify:
     - apt_update
 
-- name: "Install cuda-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }} and cuda-toolkit-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
+- name: "Install {{ cuda_apt_pkg }} and {{ cuda_tk_apt_pkg }}"
   become: true
   become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
   loop:
-    - "cuda-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
-    - "cuda-toolkit-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
+    - "{{ cuda_apt_pkg }}"
+    - "{{ cuda_tk_apt_pkg }}"
 
 - name: Add CUDA settings are added to ~/.bashrc
   blockinfile:
