@@ -2,11 +2,14 @@
 home_dir: "{{ ansible_env.HOME }}"
 install_dir: "{{ home_dir }}/install_dir"
 os_distro: "{{ ansible_distribution | lower }}"
+os_distro_ver: "{{ ansible_distribution_version | replace('.','') }}"
+# Includes . delimiter
 os_release: "{{ ansible_distribution_release }}"
+os_kernel: "{{ ansible_kernel }}"
+arch: "{{ ansible_architecture }}"
 
 eigen_ver: "3.3.9"
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
-eigen_url: "https://gitlab.com/libeigen/eigen/-/archive/{{ eigen_ver }}/{{ eigen_file }}"
 
 # RoS Distribution lookup
 ros_distribution:
@@ -16,13 +19,14 @@ ros_distribution:
   "focal": "noetic"
 
 # NVIDIA driver versioncorresponding to CUDA version
-cuda_tk_driver:
-  "11.0":
-    ver: "11.0.2"
-    apt_pkg: "cuda-11-0"
+cuda_tk_ver: "11.0.2"
+cuda_tk_dict:
+  "11.0.2":
+    apt_ver: "11-0"
+    apt_pkg: "cuda-{{ apt_ver }}"
     nvidia_driver: "450.51.05"
 
-nvidia_url: "https://developer.download.nvidia.com/compute/cuda/repos"
+nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 
 # APT Repositories
 cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
