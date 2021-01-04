@@ -27,11 +27,7 @@
     state: present
     update_cache: true
   notify:
-    - remove_apt_lock
-    - remove_dpkg_lock
-    - disable_unattended_updates
-    - disable_unattended_upgrades
-    - remove_unattended_upgrades
+    - post_add_apt_handler
     - apt_update
     - apt_upgrade
 

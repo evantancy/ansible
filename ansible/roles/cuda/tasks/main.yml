@@ -1,6 +1,6 @@
 - name: Download cuda preferences file
   get_url:
-    url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/x86_64/cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
+    url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
     dest: "{{ install_dir }}"
 
 - name: Add cuda preferences to apt
@@ -45,7 +45,7 @@
     - "cuda-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
     - "cuda-toolkit-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
 
-- name: Ensure CUDA folders are added to $PATH
+- name: Add CUDA settings are added to ~/.bashrc
   blockinfile:
     path: "{{ home_dir }}/.bashrc"
     marker: "# {mark} CUDA TOOLKIT SETTINGS - ANSIBLE MANAGED BLOCK"
@@ -63,3 +63,8 @@
     block: |
       blacklist nouveau
       options nouveau modeset=0
+
+- name: sudo update-initramfs -u
+  become: true
+  become_method: sudo
+  shell: update-initramfs -u
