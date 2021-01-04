@@ -45,9 +45,15 @@
     name: unattended-upgrades
     state: absent
 
-- name: apt_update_upgrade
+- name: apt_update
+  become: true
+  become_method: sudo
+  apt:
+    upgrade: no
+    update_cache: yes
+
+- name: apt_upgrade
   become: true
   become_method: sudo
   apt:
     upgrade: yes
-    update_cache: yes

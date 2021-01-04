@@ -18,6 +18,8 @@
     - python-pip
     - python3
     - python3-pip
+    - "linux-headers-{{ os_kernel }}"
+    - xz-utils
 
 - name: Add apt repo for git
   apt_repository:
@@ -30,7 +32,8 @@
     - disable_unattended_updates
     - disable_unattended_upgrades
     - remove_unattended_upgrades
-    - apt_update_upgrade
+    - apt_update
+    - apt_upgrade
 
 # - name: Run dpkg --configure -a
 #   become: true
@@ -89,11 +92,3 @@
   file:
     path: "{{ install_dir }}"
     state: directory
-# - name: Test ros_distribution dict
-#   debug: msg="ROS Distribution should be {{ ros_distribution[os_release] }}"
-
-# - name: Distribution
-#   debug: msg="{{ os_distro }}, {{ os_release }}"
-
-# - name: Test dict
-#   debug: msg="{{ cuda_tk_driver["11.0"]["apt"] }}"
