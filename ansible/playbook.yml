@@ -11,3 +11,4 @@
     - cuda
     - cmake
     - eigen
+    - ros

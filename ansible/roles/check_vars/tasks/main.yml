@@ -15,3 +15,10 @@
       - cuda_tk_ver in cuda_tk_dict.keys()
     fail_msg: "{{ cuda_tk_ver }} doesn't exist in cuda_tk_dict"
     success_msg: "{{ cuda_tk_ver }} exists in cuda_tk_dict"
+
+- name: Check whether ROS version exists in ros_distro_dict
+  assert:
+    that:
+      - os_release in ros_distro_dict.keys()
+    fail_msg: "{{ os_release }} doesn't exist in ros_distro_dict"
+    success_msg: "{{ os_release }} exists in ros_distro_dict"

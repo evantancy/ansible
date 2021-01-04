@@ -16,6 +16,7 @@ ros_distro_dict:
   "xenial": "kinetic"
   "bionic": "melodic"
   "focal": "noetic"
+rosdep_init_file_path: "/etc/ros/rosdep/sources.list.d/20-default.list"
 
 # NVIDIA driver versioncorresponding to CUDA version
 cuda_tk_dict:

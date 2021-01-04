@@ -1,0 +1,59 @@
+- name: Add ROS software repository in /etc/apt/sources.list.d/
+  become: true
+  become_method: sudo
+  blockinfile:
+    path: /etc/apt/sources.list.d/ros-latest.list
+    marker: "# {mark} ROS SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      deb http://packages.ros.org/ros/ubuntu {{ os_release }} main
+    create: true
+
+
+- name: Setup ROS apt key with ID
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+  notify:
+    - post_add_apt_handler
+    - apt_update
+
+- name: "Install ros-{{ ros_distro_dict[os_release] }}-desktop-full"
+  become: true
+  become_method: sudo
+  apt:
+    name: "ros-{{ ros_distro_dict[os_release] }}-desktop-full"
+    state: present
+
+- name: Installing some ROS related apt packages
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python-rosdep
+    - python-rosinstall
+    - python-rosinstall-generator
+    - python-wstool
+    - python-catkin-tools
+
+- name: Check if rosdep init has been run before
+  stat:
+    path: "{{ rosdep_init_file_path }}"
+  register: rosdep_init_file
+
+- name: Initialize rosdep
+  shell: sudo rosdep init
+  when: rosdep_init_file.stat.exists == false
+
+- name: rosdep update
+  shell: rosdep update
+
+- name: Adding ROS settings to ~/.bashrc
+  become: true
+  become_method: sudo
+  blockinfile:
+    path: "{{ home_dir }}/.bashrc"
+    marker: "# {mark} ROS SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      source /opt/ros/{{ ros_distro_dict[os_release] }}/setup.bash
