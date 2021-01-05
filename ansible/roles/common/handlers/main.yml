@@ -1,5 +1,7 @@
 ---
-- name: remove_apt_lock
+# Remove apt lock, triggers handler chain of 4 other tasks
+# START HANDLER CHAIN
+- name: post_add_apt_handler
   become: true
   become_method: sudo
   file:
@@ -8,6 +10,8 @@
   loop:
     - /var/lib/apt/lists/lock
     - /var/cache/apt/archives/lock
+  notify:
+    - remove_dpkg_lock
 
 - name: remove_dpkg_lock
   become: true
@@ -18,6 +22,8 @@
   loop:
     - /var/lib/dpkg/lock
     - /var/lib/dpkg/lock-frontend
+  notify:
+    - disable_unattended_updates
 
 - name: disable_unattended_updates
   become: true
@@ -29,6 +35,8 @@
   loop:
     - /etc/apt/apt.conf.d/10periodic
     - /etc/apt/apt.conf.d/20auto-upgrades
+  notify:
+    - disable_unattended_upgrades
 
 - name: disable_unattended_upgrades
   become: true
@@ -37,6 +45,8 @@
     path: /etc/apt/apt.conf.d/20auto-upgrades
     regexp: ^APT::Periodic::Unattended-Upgrade
     line: APT::Periodic::Unattended-Upgrade "0";
+  notify:
+    - remove_unattended_upgrades
 
 - name: remove_unattended_upgrades
   become: true
@@ -44,10 +54,17 @@
   apt:
     name: unattended-upgrades
     state: absent
+# END HANDLER CHAIN
 
-- name: apt_update_upgrade
+- name: apt_update
+  become: true
+  become_method: sudo
+  apt:
+    upgrade: no
+    update_cache: yes
+
+- name: apt_upgrade
   become: true
   become_method: sudo
   apt:
     upgrade: yes
-    update_cache: yes

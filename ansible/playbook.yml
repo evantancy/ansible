@@ -3,13 +3,13 @@
   hosts: localhost
   # become: true
   vars_files:
+    - vars/settings.yml
     - vars/defaults.yml
-    - vars/ros.yml
-    - vars/cuda.yml
-    - vars/ppa.yml
-    - vars/apt_repos.yml
   roles:
+    - check_vars
     - common
     - cuda
     - cmake
     - eigen
+    - ros
+    - robosense

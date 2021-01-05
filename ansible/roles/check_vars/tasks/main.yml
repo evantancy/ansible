@@ -1,0 +1,24 @@
+- name: Collect eigen git tags
+  shell: git ls-remote --tags --exit-code --refs https://gitlab.com/libeigen/eigen.git | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g'
+  register: eigen_git_tags
+
+- name: Check whether specified Eigen version in Eigen tag list
+  assert:
+    that:
+      - eigen_ver in eigen_git_tags.stdout_lines
+    fail_msg: "{{ eigen_ver }} doesn't exist in taglist"
+    success_msg: "{{ eigen_ver }} exists in taglist"
+
+- name: Check whether CUDA Toolkit version exists in cuda_tk_dict
+  assert:
+    that:
+      - cuda_tk_ver in cuda_tk_dict.keys()
+    fail_msg: "{{ cuda_tk_ver }} doesn't exist in cuda_tk_dict"
+    success_msg: "{{ cuda_tk_ver }} exists in cuda_tk_dict"
+
+- name: Check whether ROS version exists in ros_distro_dict
+  assert:
+    that:
+      - os_release in ros_distro_dict.keys()
+    fail_msg: "{{ os_release }} doesn't exist in ros_distro_dict"
+    success_msg: "{{ os_release }} exists in ros_distro_dict"

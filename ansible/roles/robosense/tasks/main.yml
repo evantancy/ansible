@@ -1,0 +1,19 @@
+- name: Installing Robosense related packages
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - libboost-dev
+    - libpcap-dev
+    - libpcl-dev
+    - libeigen3-dev
+
+- name: Creating symlink to enable RSView
+  become: true
+  become_method: sudo
+  file:
+    src: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
+    dest: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.58.0
+    state: link

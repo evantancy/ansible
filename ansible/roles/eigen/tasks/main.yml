@@ -11,7 +11,7 @@
 
 - name: "Download eigen {{ eigen_ver }} from gitlab"
   get_url:
-    url: "{{ eigen_url }}"
+    url: "https://gitlab.com/libeigen/eigen/-/archive/{{ eigen_ver }}/{{ eigen_file }}"
     dest: "{{ install_dir }}"
 
 - name: "Unarchive {{ eigen_file }}"
@@ -36,6 +36,6 @@
 - name: sudo make install
   become: true
   become_method: sudo
-  shell: make install --silent
+  shell: make install --debug=basic
   args:
     chdir: "{{ install_dir }}/eigen-{{ eigen_ver }}/build/"
