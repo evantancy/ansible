@@ -13,7 +13,7 @@
     # - kitware-archive-keyring
 
 - name: Obtain Kitware signing key using wget
-  shell: wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+  shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
   args:
     warn: false
 

@@ -3,7 +3,7 @@
   become_method: sudo
   apt:
     name: "{{ item }}"
-    state: present
+    state: latest
   loop:
     - git
     - terminator

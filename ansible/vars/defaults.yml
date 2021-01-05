@@ -8,9 +8,14 @@ os_release: "{{ ansible_distribution_release }}"
 os_kernel: "{{ ansible_kernel }}"
 arch: "{{ ansible_architecture }}"
 
-eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
+# CMake variables
+kitware_gpg_key: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
 
-# RoS Distribution lookup
+# Eigen variables
+eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
+eigen_url: "https://gitlab.com/libeigen/eigen/-/archive"
+
+# ROS variables
 ros_distro_dict:
   "trusty": "indigo"
   "xenial": "kinetic"
@@ -18,12 +23,11 @@ ros_distro_dict:
   "focal": "noetic"
 rosdep_init_file_path: "/etc/ros/rosdep/sources.list.d/20-default.list"
 
-# NVIDIA driver versioncorresponding to CUDA version
+# CUDA variables
 cuda_tk_dict:
   "11.0.2":
     apt_ver: "11-0"
     nvidia_driver: "450.51.05"
-
 cuda_apt_pref_pin: "cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
 cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
 cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
