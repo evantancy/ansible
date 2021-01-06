@@ -1,0 +1,23 @@
+---
+- name: "Unarchive {{ linuxcan_file }}"
+  unarchive:
+    src: "files/{{ linuxcan_file }}"
+    dest: "{{ install_dir }}"
+
+- name: "Move unarchived folder to {{ linuxcan_install_dir }}"
+  become: true
+  become_method: sudo
+  shell: "rm -rf {{ linuxcan_install_dir }}/linuxcan/ && mv {{ install_dir }}/linuxcan/ {{ linuxcan_install_dir }}"
+
+- name: "make -j{{ ansible_processor_vcpus }}"
+  make:
+    chdir: "{{ linuxcan_install_dir }}/linuxcan"
+    params:
+      NUM_THREADS: "{{ ansible_processor_vcpus }}"
+
+- name: linuxcan sudo make install
+  become: true
+  become_method: sudo
+  shell: make install --debug=basic
+  args:
+    chdir: "{{ linuxcan_install_dir }}/linuxcan"

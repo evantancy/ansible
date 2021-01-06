@@ -5,11 +5,23 @@
   vars_files:
     - vars/settings.yml
     - vars/defaults.yml
+  # Run these to simply trigger the apt_update & apt_upgrade handlers in roles/common/handlers/main.yml before installing packages
+  pre_tasks:
+    - name: Run sudo apt update
+      shell: echo "" # dummy task
+      notify: apt_update
+    - name: Run sudo apt upgrade
+      shell: echo "" # dummy task
+      notify: apt_upgrade
   roles:
     - check_vars
     - common
-    - cuda
     - cmake
     - eigen
+    - cuda
+    - cudnn
+    - tensorrt
     - ros
-    - robosense
+
+- name: Import & run sensors.yml
+  import_playbook: sensors.yml

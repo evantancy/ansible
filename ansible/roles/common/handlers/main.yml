@@ -61,10 +61,10 @@
   become_method: sudo
   apt:
     upgrade: no
-    update_cache: yes
+    update_cache: true
 
 - name: apt_upgrade
   become: true
   become_method: sudo
   apt:
-    upgrade: yes
+    upgrade: true
