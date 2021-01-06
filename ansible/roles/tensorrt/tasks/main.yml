@@ -1,0 +1,58 @@
+- name: Check if TensorRT deb file exists
+  stat:
+    path: "{{ install_dir }}/{{ tensorrt_deb_file }}"
+  register: tensorrt_deb
+
+- name: Download TensorRT deb file
+  shell: "wget {{ aid_aws_url }}/{{ tensorrt_deb_file }} -P {{ install_dir }} --quiet"
+  when: tensorrt_deb.stat.exists == false
+
+- name: Install TensorRT via deb
+  become: true
+  become_method: sudo
+  apt:
+    deb: "{{ install_dir }}/{{ tensorrt_deb_file }}"
+
+- name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
+  become: true
+  become_method: sudo
+  apt_key:
+    file: "{{ tensorrt_apt_key }}"
+    state: present
+  notify:
+    - apt_update
+    - apt_upgrade
+
+- name: Installing TensorRT packages for running and building C++ apps
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - libnvinfer7
+    - libnvinfer-dev
+    - libnvparsers7
+    - libnvparsers-dev
+    - libnvinfer-plugin7
+    - libnvinfer-plugin-dev
+    - libnvonnxparsers7
+    - libnvonnxparsers-dev
+
+- name: Installing TensorRT packages for running Python apps
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python-libnvinfer
+    - python-libnvinfer-dev
+    - python3-libnvinfer
+    - python3-libnvinfer-dev
+    # - uff-converter-tf # Tensorflow related
+
+- name: Installing PyCUDA via pip
+  pip:
+    name: pycuda
+    executable: pip3

@@ -20,5 +20,6 @@
     - eigen
     - cuda
     - cudnn
+    - tensorrt
     - ros
     - robosense
