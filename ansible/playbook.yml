@@ -22,4 +22,6 @@
     - cudnn
     - tensorrt
     - ros
-    - robosense
+
+- name: Import & run sensors.yml
+  import_playbook: sensors.yml

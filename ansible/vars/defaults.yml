@@ -50,11 +50,16 @@ cudnn_devel_deb_url: "{{ aid_aws_url }}/{{ cudnn_devel_deb_file | replace('+','%
 cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
 cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
 ppa_git: "ppa:git-core/ppa"
+ppa_kvaser: "ppa:astuff/kvaser-linux"
 
 # TensorRT variables
 tensorrt_tag: "cuda{{ cuda_tk_ver[:4] }}-trt{{ tensorrt_ver }}-ga-20201007"
 tensorrt_deb_file: "nv-tensorrt-repo-{{ os_distro }}{{ os_distro_ver }}-{{ tensorrt_tag }}_1-1_amd64.deb"
 tensorrt_apt_key: "/var/nv-tensorrt-repo-{{ tensorrt_tag }}/7fa2af80.pub"
+
+# LinuxCAN variables
+linuxcan_file: "linuxcan.tar.gz"
+linuxcan_install_dir: "/usr/src"
 
 # PeakCAN variables
 pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-8.10.2.tar.gz"

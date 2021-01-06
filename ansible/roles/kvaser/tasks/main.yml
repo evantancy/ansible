@@ -1,0 +1,40 @@
+---
+- name: Add Kvaser software repository in /etc/apt/sources.list.d/
+  become: true
+  become_method: sudo
+  blockinfile:
+    path: /etc/apt/sources.list.d/autonomoustuff-public.list
+    marker: "# {mark} KVASER SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      deb [trusted=yes] https://s3.amazonaws.com/autonomoustuff-repo/ {{ os_release }} main
+    create: true
+
+- name: Install Delphi ESR, SRR and Kvaser interface packages
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "ros-{{ ros_distro_dict[os_release] }}-delphi-esr-msgs"
+    - "ros-{{ ros_distro_dict[os_release] }}-delphi-srr-msgs"
+    - "ros-{{ ros_distro_dict[os_release] }}-kvaser-interface"
+
+- name: Add apt repo for Kvaser
+  apt_repository:
+    repo: "{{ ppa_kvaser }}"
+    state: present
+    update_cache: true
+  notify:
+    - post_add_apt_handler
+    - apt_update
+
+- name: Install Kvaser CANlib SDK and Kvaser drivers
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "kvaser-canlib-dev"
+    - "kvaser-drivers-dkms"

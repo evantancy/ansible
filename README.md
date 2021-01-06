@@ -53,13 +53,8 @@ ansible -m setup localhost
 
 # TODO
 ## Roles
-- cudnn
-- tensorRT
 - julia
-- linuxcan
-- kvaser
 - baumer
 - flycap
-- ros
 - git (maybe?)
 - vcstool
