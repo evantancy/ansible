@@ -16,8 +16,9 @@
   roles:
     - check_vars
     - common
-    - cuda
     - cmake
     - eigen
+    - cuda
+    - cudnn
     - ros
     - robosense

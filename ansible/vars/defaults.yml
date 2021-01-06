@@ -8,12 +8,16 @@ os_release: "{{ ansible_distribution_release }}"
 os_kernel: "{{ ansible_kernel }}"
 arch: "{{ ansible_architecture }}"
 
+# all BASE URLs being used
+eigen_url: "https://gitlab.com/libeigen/eigen/-/archive"
+aid_aws_url: "https://ai-debs.s3.amazonaws.com"
+nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
+
 # CMake variables
 kitware_gpg_key: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
 
 # Eigen variables
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
-eigen_url: "https://gitlab.com/libeigen/eigen/-/archive"
 
 # ROS variables
 ros_distro_dict:
@@ -28,13 +32,19 @@ cuda_tk_dict:
   "11.0.2":
     apt_ver: "11-0"
     nvidia_driver: "450.51.05"
+    cudnn_ver: "8.0.5.39"
 cuda_apt_pref_pin: "cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
 cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
 cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
 cuda_apt_pkg: "cuda-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
 cuda_tk_apt_pkg: "cuda-toolkit-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
 
-nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
+# cuDNN variables
+cuda_symlink_dir: "/usr/local/cuda-{{ cuda_tk_ver[:4] }}/targets/x86_64-linux/lib"
+cudnn_runtime_deb_file: "libcudnn8_{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}-1+cuda{{ cuda_tk_ver[:4] }}_amd64.deb"
+cudnn_runtime_deb_url: "{{ aid_aws_url }}/{{ cudnn_runtime_deb_file | replace('+','%2B') }}"
+cudnn_devel_deb_file: "libcudnn8-dev_{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}-1+cuda{{ cuda_tk_ver[:4] }}_amd64.deb"
+cudnn_devel_deb_url: "{{ aid_aws_url }}/{{ cudnn_devel_deb_file | replace('+','%2B') }}"
 
 # APT Repositories
 cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"

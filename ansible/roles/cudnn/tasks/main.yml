@@ -1,0 +1,45 @@
+- name: Check if cuDNN runtime deb file exists
+  stat:
+    path: "{{ install_dir }}/{{ cudnn_runtime_deb_file }}"
+  register: cudnn_runtime_deb
+
+- name: "Downloading cuDNN runtime library {{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}"
+  shell: "wget {{ cudnn_runtime_deb_url }} -P {{ install_dir }} --quiet"
+  when: cudnn_runtime_deb.stat.exists == false
+
+- name: Installing cuDNN runtime library
+  become: true
+  become_method: sudo
+  apt:
+    deb: "{{ install_dir }}/{{ cudnn_runtime_deb_file }}"
+
+- name: Fix broken symbolic links
+  become: true
+  become_method: sudo
+  file:
+    src: "{{ cuda_symlink_dir }}/{{ item }}.{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}"
+    dest: "{{ cuda_symlink_dir }}/{{ item }}.{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"][0] }}"
+    state: link
+    force: true
+  loop:
+    - libcudnn_ops_train.so
+    - libcudnn_ops_infer.so
+    - libcudnn_adv_train.so
+    - libcudnn_adv_infer.so
+    - libcudnn_cnn_train.so
+    - libcudnn_cnn_infer.so
+
+- name: Check if cuDNN developer deb file exists
+  stat:
+    path: "{{ install_dir }}/{{ cudnn_devel_deb_file }}"
+  register: cudnn_devel_deb
+
+- name: "Downloading cuDNN developer library {{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}"
+  shell: "wget {{ cudnn_devel_deb_url }} -P {{ install_dir }} --quiet"
+  when: cudnn_devel_deb.stat.exists == false
+
+- name: Installing cuDNN developer library
+  become: true
+  become_method: sudo
+  apt:
+    deb: "{{ install_dir }}/{{ cudnn_devel_deb_file }}"
