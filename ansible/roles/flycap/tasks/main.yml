@@ -11,3 +11,43 @@
     responses:
       "\(y/n\)": "y"
       "password": # TODO: use secrets.yml to enter password automatically
+
+- name: Install Flycap related apt packages
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - libavcodec57
+    - libavcodec-extra57
+    - libraw1394-11
+    - libavformat57
+    - libswscale4
+    - libswresample2
+    - libavutil55
+    - libgtkmm-2.4-1v5
+    - libglademm-2.4-1v5
+    - libgtkglextmm-x11-1.2-0v5
+    - libgtkmm-2.4-dev
+    - libglademm-2.4-dev
+    - libgtkglextmm-x11-1.2-dev
+    - libusb-1.0-0
+    - libgtkmm-2.4-1v5
+    - libglademm-2.4-1v5
+
+- name: Attempting to fix broken packages
+  become: true
+  become_method: sudo
+  apt:
+    state: fixed
+
+- name: Changing linux buffer size
+  blockinfile:
+    path: /etc/sysctl.conf
+    marker: "# {mark} FLYCAP SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      net.core.rmem_max=37748736
+      net.core.rmem_default=37748736
+      net.core.wmem_max = 37748736
+      net.core.wmem_default = 37748736

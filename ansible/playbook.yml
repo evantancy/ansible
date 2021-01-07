@@ -23,6 +23,8 @@
     - tensorrt
     - ros
     - julia
+    # - flycap
+    
 
 - name: Import & run sensors.yml
   import_playbook: sensors.yml
