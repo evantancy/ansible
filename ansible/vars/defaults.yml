@@ -68,3 +68,7 @@ pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-dr
 julia_ver: "1.5.2"
 julia_file: "julia-{{ julia_ver }}-linux-{{ arch }}.tar.gz"
 julia_init_setup_file: "ONEinitialsetup.jl"
+
+# Flycap variables
+flycap_ver: "2.13.3.31"
+flycap_file: "flycapture2-{{ flycap_ver }}-amd64.tar.gz"

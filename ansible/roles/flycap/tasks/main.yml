@@ -1,0 +1,13 @@
+---
+- name: "Unarchive {{ flycap_file }} to {{ install_dir }}"
+  unarchive:
+    src: "files/{{ flycap_file }}"
+    dest: "{{ install_dir }}"
+
+- name: Run flycap installation script
+  expect:
+    chdir: "{{ install_dir }}/flycap2-{{ flycap_ver }}-amd64"
+    command: "sh ./install_flycap.sh"
+    responses:
+      "\(y/n\)": "y"
+      "password": # TODO: use secrets.yml to enter password automatically
