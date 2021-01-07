@@ -1,0 +1,26 @@
+---
+- name: "Download julia tar.gz to {{ install_dir }}"
+  shell: "wget https://julialang-s3.julialang.org/bin/linux/x64/{{ julia_ver[:3] }}/{{ julia_file }} -P {{ install_dir }} --quiet"
+
+- name: Unarchive julia tar.gz
+  become: true
+  become_method: sudo
+  unarchive:
+    src: "{{ install_dir }}/{{ julia_file }}"
+    dest: /opt/
+
+- name: Create julia symlink
+  become: true
+  become_method: sudo
+  file:
+    src: "/opt/julia-{{ julia_ver }}/bin/julia"
+    dest: "/usr/local/bin/julia"
+    state: link
+
+- name: "Copy {{ julia_init_setup_file }} to {{ install_dir }}"
+  copy:
+    src: "files/{{ julia_init_setup_file }}"
+    dest: "{{ install_dir }}"
+
+- name: "Execute {{ julia_init_setup_file }}"
+  shell: "julia {{ install_dir }}/{{ julia_init_setup_file }}"
