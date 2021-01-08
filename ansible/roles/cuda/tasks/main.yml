@@ -1,7 +1,5 @@
 - name: Download cuda preferences file
-  get_url:
-    url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }}"
-    dest: "{{ install_dir }}"
+  shell: "wget {{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }} -P {{ install_dir }} --quiet"
 
 - name: Add cuda preferences to apt
   become: true
@@ -14,10 +12,7 @@
   register: cuda_local_deb
 
 - name: Download cuda local deb installer (big boi)
-  get_url:
-    url: "{{ nvidia_url }}/{{ cuda_tk_ver }}/local_installers/{{ cuda_deb_file }}"
-    dest: "{{ install_dir }}"
-    timeout: 30
+  shell: "wget {{ nvidia_url }}/{{ cuda_tk_ver }}/local_installers/{{ cuda_deb_file }} -P {{ install_dir }} --quiet"
   when: cuda_local_deb.stat.exists == false
 
 - name: Install cuda via .deb file
@@ -34,6 +29,8 @@
     state: present
   notify:
     - apt_update
+
+- meta: flush_handlers
 
 - name: "Install {{ cuda_apt_pkg }} and {{ cuda_tk_apt_pkg }}"
   become: true

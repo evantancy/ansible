@@ -10,9 +10,7 @@
     - libeigen3-dev
 
 - name: "Download eigen {{ eigen_ver }} from gitlab"
-  get_url:
-    url: "{{ eigen_url }}/{{ eigen_ver }}/{{ eigen_file }}"
-    dest: "{{ install_dir }}"
+  shell: "wget {{ eigen_url }}/{{ eigen_ver }}/{{ eigen_file }} -P {{ install_dir }} --quiet"
 
 - name: "Unarchive {{ eigen_file }}"
   unarchive:

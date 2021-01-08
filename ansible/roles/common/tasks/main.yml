@@ -32,6 +32,8 @@
     - apt_update
     - apt_upgrade
 
+- meta: flush_handlers
+
 # - name: Run dpkg --configure -a
 #   become: true
 #   become_method: sudo
@@ -44,7 +46,7 @@
   register: upgrade_git_status
   until: upgrade_git_status is success
   delay: 1
-  retries: 5
+  retries: 3
 
 - name: Upgrade python3 pip
   pip:

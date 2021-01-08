@@ -1,10 +1,10 @@
 ---
 - name: Executing playbook.yml
   hosts: localhost
-  # become: true
   vars_files:
     - vars/settings.yml
     - vars/defaults.yml
+    - secrets/secrets.yml
   # Run these to simply trigger the apt_update & apt_upgrade handlers in roles/common/handlers/main.yml before installing packages
   pre_tasks:
     - name: Run sudo apt update
@@ -23,9 +23,9 @@
     - tensorrt
     - ros
     - julia
-    - flycap
-    - baumer
-    - netplan
+    # - flycap # For APM
+    # - baumer # For AQC
+    # - netplan
     - peakcan
     - robosense
     - linuxcan

@@ -29,6 +29,8 @@
     - post_add_apt_handler
     - apt_update
 
+- meta: flush_handlers
+
 - name: Install Kvaser CANlib SDK and Kvaser drivers
   become: true
   become_method: sudo

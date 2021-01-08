@@ -1,7 +1,6 @@
 ---
 - name: Executing sensors.yml
   hosts: localhost
-  # become: true
   vars_files:
     - vars/settings.yml
     - vars/defaults.yml

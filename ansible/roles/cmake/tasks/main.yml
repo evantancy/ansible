@@ -27,6 +27,8 @@
     - apt_update
     - apt_upgrade
 
+- meta: flush_handlers
+
 - name: Ensure CMake is upgraded
   apt:
     name: cmake
@@ -34,4 +36,4 @@
   register: upgrade_cmake_status
   until: upgrade_cmake_status is success
   delay: 1
-  retries: 5
+  retries: 3

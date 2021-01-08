@@ -2,7 +2,7 @@
 - name: "Download julia tar.gz to {{ install_dir }}"
   shell: "wget https://julialang-s3.julialang.org/bin/linux/x64/{{ julia_ver[:3] }}/{{ julia_file }} -P {{ install_dir }} --quiet"
 
-- name: Unarchive julia tar.gz
+- name: Unarchive julia tar.gz to /opt/
   become: true
   become_method: sudo
   unarchive:

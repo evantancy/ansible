@@ -17,6 +17,8 @@
     - post_add_apt_handler
     - apt_update
 
+- meta: flush_handlers
+
 - name: "Install ros-{{ ros_distro_dict[os_release] }}-desktop-full"
   become: true
   become_method: sudo

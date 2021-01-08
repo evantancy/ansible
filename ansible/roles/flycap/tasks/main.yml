@@ -10,7 +10,7 @@
     command: "sh ./install_flycap.sh"
     responses:
       "\(y/n\)": "y"
-      "password": # TODO: use secrets.yml to enter password automatically
+      "password": "{{ my_password }}"
 
 - name: Install Flycap related apt packages
   become: true
