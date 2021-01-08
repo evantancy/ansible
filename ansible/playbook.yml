@@ -23,8 +23,13 @@
     - tensorrt
     - ros
     - julia
-    # - flycap
-    
+    - flycap
+    - baumer
+    - netplan
+    - peakcan
+    - robosense
+    - linuxcan
+    - kvaser
 
-- name: Import & run sensors.yml
-  import_playbook: sensors.yml
+# - name: Import & run sensors.yml
+#   import_playbook: sensors.yml

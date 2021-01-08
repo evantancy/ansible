@@ -5,7 +5,6 @@
   vars_files:
     - vars/settings.yml
     - vars/defaults.yml
-  # Run these to simply trigger the apt_update & apt_upgrade handlers in roles/common/handlers/main.yml before installing packages
   roles:
     - robosense
     - linuxcan

@@ -61,8 +61,9 @@ tensorrt_apt_key: "/var/nv-tensorrt-repo-{{ tensorrt_tag }}/7fa2af80.pub"
 linuxcan_file: "linuxcan.tar.gz"
 linuxcan_install_dir: "/usr/src"
 
-# PeakCAN variables
-pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-8.10.2.tar.gz"
+# PeakCAN variables (aka PCAN)
+pcan_file: "peak-linux-driver-{{ pcan_ver }}.tar.gz"
+pcan_url: "http://www.peak-system.com/produktcd/Develop/PC%20interfaces/Linux/PCAN-Linux%20Driver/{{ pcan_file }}"
 
 # Julia variables
 julia_ver: "1.5.2"

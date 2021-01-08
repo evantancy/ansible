@@ -1,0 +1,57 @@
+---
+- name: Check if PeakCAN has been downloaded already
+  stat:
+    path: "{{ install_dir}}/{{ pcan_file }}"
+  register: pcan_status
+
+- name: "Download {{ pcan_file }}"
+  shell: "wget {{ pcan_url }} --directory-prefix {{ install_dir }} --quiet"
+  when: pcan_status.stat.exists == false
+
+- name: Installing PeakCAN apt package dependencies
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - libpopt-dev
+    - g++
+
+- name: "Unarchiving {{ pcan_file }} to {{ install_dir }}"
+  unarchive:
+    src: "{{ install_dir }}/{{ pcan_file }}"
+    dest: "{{ install_dir }}"
+
+- name: make -j all
+  make:
+    chdir: "{{ install_dir }}/peak-linux-driver-{{ pcan_ver }}"
+    params:
+      NUM_THREADS: "{{ ansible_processor_vcpus }}"
+      target: all
+
+- name: sudo make install
+  become: true
+  become_method: sudo
+  make:
+    chdir: "{{ install_dir }}/peak-linux-driver-{{ pcan_ver }}"
+    params:
+      target: install
+
+- name: Download and install peak-system.list
+  shell: "wget -q http://www.peak-system.com/debian/dists/{{ os_release }}/peak-system.list -O- | sudo tee /etc/apt/sources.list.d/peak-system.list"
+
+- name: Download PEAK-System public key
+  shell: "wget -q http://www.peak-system.com/debian/peak-system-public-key.asc -O- | sudo apt-key add -"
+  notify:
+    - apt_update
+
+- meta: flush_handlers
+
+- name: Install PCAN-View
+  become: true
+  become_method: sudo
+  apt:
+    name: pcanview-ncurses
+    state: present
+    
