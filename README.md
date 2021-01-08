@@ -9,10 +9,11 @@ sudo apt update && sudo apt install ansible
 ```
 # How to use this repository
 1. Edit settings.yml for different library versions you want
-2. Run specific playbook i.e. playbook.yml that includes different libraries that you want
+2. Place your user password into secrets.yml **DO NOT uncomment the line that ignores this file in .gitignore!**
+3. Run specific playbook i.e. playbook.yml that includes different libraries that you want
 
 ## Running playbooks
-Run any playbook in verbose mode using the following:
+Run any playbook in verbose mode aka spam the terminal mode using the following:
 ```bash
 # -K flag or --ask-become-pass
 ansible-playbook -v -K playbook_name.yml
@@ -53,8 +54,6 @@ ansible -m setup localhost
 
 # TODO
 ## Roles
-- julia
 - baumer
-- flycap
 - git (maybe?)
 - vcstool

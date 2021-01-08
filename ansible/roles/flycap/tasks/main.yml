@@ -6,11 +6,12 @@
 
 - name: Run flycap installation script
   expect:
-    chdir: "{{ install_dir }}/flycap2-{{ flycap_ver }}-amd64"
-    command: "sh ./install_flycap.sh"
+    chdir: "{{ install_dir }}/flycapture2-{{ flycap_ver }}-amd64"
+    command: "sh install_flycapture.sh"
     responses:
-      "\(y/n\)": "y"
+      "\\(y/n\\)\\$": "y"
       "password": "{{ my_password }}"
+      "\\n\\$": "{{ ansible_env.USER }}"
 
 - name: Install Flycap related apt packages
   become: true
@@ -43,6 +44,8 @@
     state: fixed
 
 - name: Changing linux buffer size
+  become: true
+  become_method: sudo
   blockinfile:
     path: /etc/sysctl.conf
     marker: "# {mark} FLYCAP SETTINGS - ANSIBLE MANAGED BLOCK"

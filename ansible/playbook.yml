@@ -23,7 +23,7 @@
     - tensorrt
     - ros
     - julia
-    # - flycap # For APM
+    - flycap # For APM
     # - baumer # For AQC
     # - netplan
     - peakcan
