@@ -23,6 +23,8 @@
     - xz-utils
 
 - name: Add apt repo for git
+  become: true
+  become_method: sudo
   apt_repository:
     repo: "{{ ppa_git }}"
     state: present
