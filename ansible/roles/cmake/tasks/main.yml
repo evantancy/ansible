@@ -32,6 +32,8 @@
 - meta: flush_handlers
 
 - name: Ensure CMake is upgraded
+  become: true
+  become_method: sudo
   apt:
     name: cmake
     state: latest

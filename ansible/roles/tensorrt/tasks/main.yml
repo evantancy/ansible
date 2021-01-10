@@ -23,6 +23,8 @@
     - apt_update
     - apt_upgrade
 
+- meta: flush_handlers
+
 - name: Installing TensorRT packages for running and building C++ apps
   become: true
   become_method: sudo
@@ -52,7 +54,7 @@
     - python3-libnvinfer-dev
     # - uff-converter-tf # Tensorflow related
 
-- name: Installing PyCUDA via pip
-  pip:
-    name: pycuda
-    executable: pip3
+# - name: Installing PyCUDA via pip
+#   pip:
+#     name: pycuda
+#     executable: pip3

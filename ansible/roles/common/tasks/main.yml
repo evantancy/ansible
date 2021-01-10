@@ -21,6 +21,11 @@
     - build-essential
     - "linux-headers-{{ os_kernel }}"
     - xz-utils
+    - python3-dev
+    - python-dev
+    - python-setuptools
+    - libboost-python-dev
+    - libboost-thread-dev
 
 - name: Add apt repo for git
   become: true
