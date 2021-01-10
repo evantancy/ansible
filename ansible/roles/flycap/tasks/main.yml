@@ -4,14 +4,10 @@
     src: "files/{{ flycap_file }}"
     dest: "{{ install_dir }}"
 
-- name: Run flycap installation script
-  expect:
-    chdir: "{{ install_dir }}/flycapture2-{{ flycap_ver }}-amd64"
-    command: "sh install_flycapture.sh"
-    responses:
-      "\\(y/n\\)\\$": "y"
-      "password": "{{ my_password }}"
-      "\\n\\$": "{{ ansible_env.USER }}"
+- name: Install flycap script dependencies
+  pip:
+    name: pexpect
+    executable: pip2
 
 - name: Install Flycap related apt packages
   become: true
@@ -34,8 +30,22 @@
     - libglademm-2.4-dev
     - libgtkglextmm-x11-1.2-dev
     - libusb-1.0-0
+    - libatkmm-1.6-1v5
+    - libcairomm-1.0-1v5
+    - libglade2-0
+    - libglibmm-2.4-1v5
     - libgtkmm-2.4-1v5
-    - libglademm-2.4-1v5
+    - libpangomm-1.4-1v5
+    - libsigc++-2.0-0v5
+
+- name: Run flycap installation script
+  expect:
+    chdir: "{{ install_dir }}/flycapture2-{{ flycap_ver }}-amd64"
+    command: "sh install_flycapture.sh"
+    responses:
+      "\\(y/n\\)\\$": "y"
+      "password": "{{ my_password }}"
+      "\\n\\$": "{{ ansible_env.USER }}"
 
 - name: Attempting to fix broken packages
   become: true

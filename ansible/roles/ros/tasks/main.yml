@@ -88,4 +88,3 @@
     - "ros-{{ ros_distro_dict[os_release] }}-swri-nodelet"
     - "ros-{{ ros_distro_dict[os_release] }}-novatel-gps-msgs"
     - "ros-{{ ros_distro_dict[os_release] }}-gps-common"
-    - "ros-{{ ros_distro_dict[os_release] }}-kvaser-interface"
