@@ -9,7 +9,11 @@ sudo apt update && sudo apt install ansible
 ```
 # How to use this repository
 1. Edit settings.yml for different library versions you want
-2. Place your user password into secrets.yml **DO NOT uncomment the line that ignores this file in .gitignore!**
+2. Place your user password into secrets/secrets.yml using the following:
+```
+---
+my_password: "asdfg" # for example
+```
 3. Run specific playbook i.e. playbook.yml that includes different libraries that you want
 
 ## Running playbooks
