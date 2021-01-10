@@ -21,6 +21,8 @@
     - "ros-{{ ros_distro_dict[os_release] }}-kvaser-interface"
 
 - name: Add apt repo for Kvaser
+  become: true
+  become_method: sudo
   apt_repository:
     repo: "{{ ppa_kvaser }}"
     state: present

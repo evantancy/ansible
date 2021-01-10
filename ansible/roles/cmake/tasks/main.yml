@@ -18,6 +18,8 @@
     warn: false
 
 - name: Add apt repo for cmake
+  become: true
+  become_method: sudo
   apt_repository:
     repo: "{{ cmake_repo }}"
     state: present
