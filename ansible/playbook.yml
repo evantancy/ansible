@@ -16,6 +16,7 @@
   roles:
     - check_vars
     - common
+    - git
     - cmake
     - eigen
     - cuda

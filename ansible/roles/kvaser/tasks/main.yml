@@ -29,8 +29,8 @@
     name: "{{ item }}"
     state: present
   loop:
-    - "kvaser-canlib-dev"
-    - "kvaser-drivers-dkms"
+    - kvaser-canlib-dev
+    - kvaser-drivers-dkms
 
 - name: Install Delphi ESR, SRR and Kvaser interface packages
   become: true

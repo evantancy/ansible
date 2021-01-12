@@ -1,0 +1,14 @@
+---
+- name: Configure git aliases
+  blockinfile:
+    path: "{{ home_dir }}/.gitconfig"
+    marker: "# {mark} GIT SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      [alias]
+          co = checkout
+          br = branch
+          ci = commit
+          st = status
+          rt = reset
+          rb = rebase
+    create: yes

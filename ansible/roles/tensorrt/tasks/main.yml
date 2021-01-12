@@ -25,6 +25,27 @@
 
 - meta: flush_handlers
 
+- name: Install TensorRT
+  become: true
+  become_method: sudo
+  apt:
+    name: tensorrt
+    state: present
+
+- name: Installing TensorRT packages for running and building Python apps
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python-libnvinfer
+    - python-libnvinfer-dev
+    - python3-libnvinfer
+    - python3-libnvinfer-dev
+    - uff-converter-tf # Tensorflow related
+    - onnx-graphsurgeon
+
 - name: Installing TensorRT packages for running and building C++ apps
   become: true
   become_method: sudo
@@ -41,32 +62,17 @@
     - libnvonnxparsers7
     - libnvonnxparsers-dev
 
-- name: Installing TensorRT packages for running Python apps
-  become: true
-  become_method: sudo
-  apt:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - python-libnvinfer
-    - python-libnvinfer-dev
-    - python3-libnvinfer
-    - python3-libnvinfer-dev
-    # - uff-converter-tf # Tensorflow related
-
-# - name: Installing PyCUDA via pip
-#   pip:
-#     name: pycuda
-#     executable: pip3
 - name: "Downloading pycuda{{ pycuda_ver }}.tar.gz"
   shell: "wget {{ pycuda_url }} -P {{ install_dir }} --quiet"
 
-- name: "Unzipping .tar.gz to /opt/"
+- name: "Unzipping pycuda-{{ pycuda_ver }}.tar.gz to /opt/"
   become: true
   become_method: sudo
   unarchive:
     src: "{{ install_dir }}/pycuda-{{ pycuda_ver }}.tar.gz"
-    dest: "{{ install_dir }}"
+    dest: /opt/
 
-- name: Running configure.py
-  shell: "./configure.py && make -j && sudo make install"
+- name: PyCUDA - run ./configure.py && make -j && sudo make install
+  shell:
+    cmd: "./configure.py && make -j{{ ansible_processor_vcpus }} && sudo make install --debug=basic"
+    chdir: "/opt/pycuda-{{ pycuda_ver }}"

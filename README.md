@@ -14,13 +14,14 @@ sudo apt update && sudo apt install ansible
 ---
 my_password: "asdfg" # for example
 ```
-3. Run specific playbook i.e. playbook.yml that includes different libraries that you want
+3. Run specific playbook i.e. playbook.yml that includes different libraries that you want see [here](#running-playbooks)
 
 ## Running playbooks
 Run any playbook in verbose mode aka spam the terminal mode using the following:
 ```bash
 # -K flag or --ask-become-pass
-ansible-playbook -v -K playbook_name.yml
+cd ansible_adventures/ansible
+ansible-playbook -v -K playbook.yml
 ```
 
 To view all Ansible related variables for a specific host run:
