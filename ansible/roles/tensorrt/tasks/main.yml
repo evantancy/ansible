@@ -58,3 +58,15 @@
 #   pip:
 #     name: pycuda
 #     executable: pip3
+- name: "Downloading pycuda{{ pycuda_ver }}.tar.gz"
+  shell: "wget {{ pycuda_url }} -P {{ install_dir }} --quiet"
+
+- name: "Unzipping .tar.gz to /opt/"
+  become: true
+  become_method: sudo
+  unarchive:
+    src: "{{ install_dir }}/pycuda-{{ pycuda_ver }}.tar.gz"
+    dest: "{{ install_dir }}"
+
+- name: Running configure.py
+  shell: "./configure.py && make -j && sudo make install"

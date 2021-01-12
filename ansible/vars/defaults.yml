@@ -57,6 +57,9 @@ tensorrt_tag: "cuda{{ cuda_tk_ver[:4] }}-trt{{ tensorrt_ver }}-ga-20201007"
 tensorrt_deb_file: "nv-tensorrt-repo-{{ os_distro }}{{ os_distro_ver }}-{{ tensorrt_tag }}_1-1_amd64.deb"
 tensorrt_apt_key: "/var/nv-tensorrt-repo-{{ tensorrt_tag }}/7fa2af80.pub"
 
+# PyCUDA variables
+pycuda_url: "https://files.pythonhosted.org/packages/46/61/47d3235a4c13eec5a5f03594ddb268f4858734e02980afbcd806e6242fa5/pycuda-{{ pycuda_ver }}.tar.gz"
+
 # LinuxCAN variables
 linuxcan_file: "linuxcan.tar.gz"
 linuxcan_install_dir: "/usr/src"
