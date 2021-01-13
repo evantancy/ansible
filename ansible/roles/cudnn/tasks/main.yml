@@ -1,3 +1,4 @@
+---
 - name: Check if cuDNN runtime deb file exists
   stat:
     path: "{{ install_dir }}/{{ cudnn_runtime_deb_file }}"

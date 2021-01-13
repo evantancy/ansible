@@ -1,3 +1,4 @@
+---
 - name: Add ROS software repository in /etc/apt/sources.list.d/
   become: true
   become_method: sudo

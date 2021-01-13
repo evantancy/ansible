@@ -1,3 +1,4 @@
+---
 - name: Check if TensorRT deb file exists
   stat:
     path: "{{ install_dir }}/{{ tensorrt_deb_file }}"

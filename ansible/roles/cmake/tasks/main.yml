@@ -1,10 +1,18 @@
-- name: Install Cmake via snap
+---
+- name: Install CMake via snap
   become: true
   become_method: sudo
   snap:
     name: cmake
     state: present
     classic: yes
+
+- name: Remove CMake apt package
+  become: true
+  become_method: sudo
+  apt:
+    name: cmake
+    state: absent
 
 # - name: Install cmake related apt packages
 #   become: true

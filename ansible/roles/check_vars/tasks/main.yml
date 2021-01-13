@@ -1,3 +1,4 @@
+---
 - name: Collect eigen git tags
   shell: git ls-remote --tags --exit-code --refs https://gitlab.com/libeigen/eigen.git | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g'
   register: eigen_git_tags

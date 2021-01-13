@@ -1,3 +1,4 @@
+---
 - name: Download cuda preferences file
   shell: "wget {{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }} -P {{ install_dir }} --quiet"
 
