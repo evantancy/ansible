@@ -19,6 +19,7 @@
     - git
     - cmake
     - eigen
+    - g2o
     - cuda
     - cudnn
     - tensorrt

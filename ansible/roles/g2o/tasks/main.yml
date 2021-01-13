@@ -1,0 +1,40 @@
+---
+- name: Install g2o apt dependencies
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - libeigen3-dev
+    - libsuitesparse-dev
+    - qtdeclarative5-dev
+    - qt5-qmake
+    - libqglviewer-dev-qt5
+
+- name: "Clone {{ g2o_git_repo }} into {{ install_dir }}"
+  git:
+    repo: "{{ g2o_git_repo }}"
+    dest: "{{ install_dir }}"
+    clone: true
+
+- name: "Create {{ install_dir }}/g2o/build"
+  file:
+    path: "{{ install_dir }}/g2o/build"
+    state: directory
+
+- name: Run cmake without changing directories
+  shell: "cmake -S {{ install_dir }}g2o -B {{ install_dir }}/g2o/build/"
+
+- name: "make -j{{ ansible_processor_vcpus }}"
+  make:
+    chdir: "{{ install_dir }}/g2o/build/"
+    params:
+      NUM_THREADS: "{{ ansible_processor_vcpus }}"
+
+- name: sudo make install
+  become: true
+  become_method: sudo
+  shell: make install --debug=basic
+  args:
+    chdir: "{{ install_dir }}/g2o/build/"
