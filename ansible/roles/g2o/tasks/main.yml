@@ -15,7 +15,7 @@
 - name: "Clone {{ g2o_git_repo }} into {{ install_dir }}"
   git:
     repo: "{{ g2o_git_repo }}"
-    dest: "{{ install_dir }}"
+    dest: "{{ install_dir }}/g2o"
     clone: true
 
 - name: "Create {{ install_dir }}/g2o/build"
@@ -24,7 +24,7 @@
     state: directory
 
 - name: Run cmake without changing directories
-  shell: "cmake -S {{ install_dir }}g2o -B {{ install_dir }}/g2o/build/"
+  shell: "cmake -S {{ install_dir }}/g2o -B {{ install_dir }}/g2o/build/"
 
 - name: "make -j{{ ansible_processor_vcpus }}"
   make:
