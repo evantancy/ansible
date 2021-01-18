@@ -14,7 +14,7 @@ aid_aws_url: "https://ai-debs.s3.amazonaws.com"
 nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 
 # CMake variables
-# kitware_gpg_key: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
+kitware_gpg_key: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
 
 # Eigen variables
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
@@ -50,8 +50,8 @@ cudnn_devel_deb_file: "libcudnn8-dev_{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"]
 cudnn_devel_deb_url: "{{ aid_aws_url }}/{{ cudnn_devel_deb_file | replace('+','%2B') }}"
 
 # APT Repositories
-# cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
-# cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
+cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
+cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
 ppa_git: "ppa:git-core/ppa"
 ppa_kvaser: "ppa:astuff/kvaser-linux"
 
