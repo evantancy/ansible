@@ -10,9 +10,9 @@
     - name: Run sudo apt update
       shell: echo "" # dummy task
       notify: apt_update
-    - name: Run sudo apt upgrade
-      shell: echo "" # dummy task
-      notify: apt_upgrade
+    # - name: Run sudo apt upgrade
+    #   shell: echo "" # dummy task
+    #   notify: apt_upgrade
   roles:
     - check_vars
     - common
@@ -28,10 +28,8 @@
     - flycap # For APM
     # - baumer # For AQC
     # - netplan
-    - peakcan
-    - robosense
-    - linuxcan
-    - kvaser
+    - torch
+    - trtorch
 
-# - name: Import & run sensors.yml
-#   import_playbook: sensors.yml
+- name: Import & run sensors.yml
+  import_playbook: sensors.yml

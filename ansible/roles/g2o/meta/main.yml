@@ -1,3 +1,5 @@
 ---
 dependencies:
   - role: cmake
+  - role: eigen
+  

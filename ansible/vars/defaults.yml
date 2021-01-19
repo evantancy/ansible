@@ -68,8 +68,9 @@ linuxcan_file: "linuxcan.tar.gz"
 linuxcan_install_dir: "/usr/src"
 
 # PeakCAN variables (aka PCAN)
+pcan_ver_list: ["8.10.2", "8.10.1", "8.10.0","8.9.3","8.9.0"]
 pcan_file: "peak-linux-driver-{{ pcan_ver }}.tar.gz"
-pcan_url: "http://www.peak-system.com/produktcd/Develop/PC%20interfaces/Linux/PCAN-Linux%20Driver/{{ pcan_file }}"
+pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-{{ pcan_ver }}.tar.gz"
 
 # Julia variables
 julia_ver: "1.5.2"

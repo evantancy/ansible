@@ -5,6 +5,7 @@
     - vars/settings.yml
     - vars/defaults.yml
   roles:
+    - peakcan
     - robosense
     - linuxcan
     - kvaser
