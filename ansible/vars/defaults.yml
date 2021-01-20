@@ -61,7 +61,8 @@ tensorrt_deb_file: "nv-tensorrt-repo-{{ os_distro }}{{ os_distro_ver }}-{{ tenso
 tensorrt_apt_key: "/var/nv-tensorrt-repo-{{ tensorrt_tag }}/7fa2af80.pub"
 
 # PyCUDA variables
-pycuda_url: "https://files.pythonhosted.org/packages/46/61/47d3235a4c13eec5a5f03594ddb268f4858734e02980afbcd806e6242fa5/pycuda-{{ pycuda_ver }}.tar.gz"
+pycuda_file: "pycuda-{{ pycuda_ver }}.tar.gz"
+pycuda_url: "https://files.pythonhosted.org/packages/46/61/47d3235a4c13eec5a5f03594ddb268f4858734e02980afbcd806e6242fa5"
 
 # LinuxCAN variables
 linuxcan_file: "linuxcan.tar.gz"
@@ -80,3 +81,6 @@ julia_init_setup_file: "ONEinitialsetup.jl"
 # Flycap variables
 flycap_ver: "2.13.3.31"
 flycap_file: "flycapture2-{{ flycap_ver }}-amd64.tar.gz"
+
+# Baumer variables
+baumer_deb_file: "baumer-gapi-sdk-linux-v2.10.1-gcc-4.8-x86-64.deb"

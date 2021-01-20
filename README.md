@@ -59,6 +59,6 @@ ansible -m setup localhost
 
 # TODO
 ## Roles
-- baumer
 - git (maybe?)
 - vcstool
+- development & production (APM/AQC) playbooks

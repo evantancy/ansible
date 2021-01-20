@@ -5,14 +5,12 @@
     - vars/settings.yml
     - vars/defaults.yml
     - secrets/secrets.yml
-  # Run these to simply trigger the apt_update & apt_upgrade handlers in roles/common/handlers/main.yml before installing packages
+  handlers:
+    - include: handlers/apt_handlers.yml
   pre_tasks:
-    - name: Run sudo apt update
-      shell: echo "" # dummy task
+    - name: Trigger apt_update
+      shell: echo ""
       notify: apt_update
-    # - name: Run sudo apt upgrade
-    #   shell: echo "" # dummy task
-    #   notify: apt_upgrade
   roles:
     - check_vars
     - common
@@ -26,10 +24,11 @@
     - ros
     - julia
     - flycap # For APM
-    # - baumer # For AQC
+    - baumer # For AQC
     # - netplan
     - torch
     - trtorch
-
-- name: Import & run sensors.yml
-  import_playbook: sensors.yml
+    - peakcan
+    - robosense
+    - linuxcan
+    - kvaser

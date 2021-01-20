@@ -10,8 +10,14 @@
     - build-essential
     - libeigen3-dev
 
+- name: "Check if {{ eigen_file }} exists"
+  stat:
+    path: "{{ install_dir }}/{{ eigen_file }}"
+  register: eigen_tar
+
 - name: "Download eigen {{ eigen_ver }} from gitlab"
   shell: "wget {{ eigen_url }}/{{ eigen_ver }}/{{ eigen_file }} -P {{ install_dir }} --quiet"
+  when: eigen_tar.stat.exists == false
 
 - name: "Unarchive {{ eigen_file }}"
   unarchive:

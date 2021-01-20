@@ -1,2 +1,15 @@
 ---
-#TODO
+- name: "Check if {{ baumer_deb_file }} exists in {{ install_dir }}"
+  stat:
+    path: "{{ install_dir }}/{{ baumer_deb_file }}"
+  register: baumer_deb
+
+- name: "Download {{ baumer_deb_file }}"
+  shell: "wget {{ aid_aws_url }}/{{ baumer_deb_file }} -P {{ install_dir }} --quiet"
+  when: baumer_deb.stat.exists == false
+
+- name: Install Baumer
+  become: true
+  become_method: sudo
+  apt:
+    deb: "{{ install_dir }}/{{ cuda_deb_file }}"

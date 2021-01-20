@@ -63,14 +63,29 @@
     - libnvonnxparsers7
     - libnvonnxparsers-dev
 
-- name: "Downloading pycuda{{ pycuda_ver }}.tar.gz"
-  shell: "wget {{ pycuda_url }} -P {{ install_dir }} --quiet"
+- name: "Check if {{ pycuda_file }} exists"
+  stat:
+    path: "{{ install_dir }}/{{ pycuda_file }}"
+  register: pycuda_tar
 
-- name: "Unzipping pycuda-{{ pycuda_ver }}.tar.gz to /opt/"
+- name: "Downloading {{ pycuda_file }}"
+  shell: "wget {{ pycuda_url }}/{{ pycuda_file }} -P {{ install_dir }} --quiet"
+  when: pycuda_tar.stat.exists == false
+
+
+- name: Install numpy, pytest
+  pip:
+    executable: pip3
+    name: "{{ item }}"
+  loop:
+    - numpy
+    - pytest
+
+- name: "Unzipping {{ pycuda_file }} to /opt/"
   become: true
   become_method: sudo
   unarchive:
-    src: "{{ install_dir }}/pycuda-{{ pycuda_ver }}.tar.gz"
+    src: "{{ install_dir }}/{{ pycuda_file }}"
     dest: /opt/
 
 - name: PyCUDA - run ./configure.py && make -j && sudo make install

@@ -1,6 +1,12 @@
 ---
+- name: "Check if {{ julia_file }} exists"
+  stat:
+    path: "{{ install_dir }}/{{ julia_file }}"
+  register: julia_tar
+
 - name: "Download julia tar.gz to {{ install_dir }}"
   shell: "wget https://julialang-s3.julialang.org/bin/linux/x64/{{ julia_ver[:3] }}/{{ julia_file }} -P {{ install_dir }} --quiet"
+  when: julia_tar.stat.exists == false
 
 - name: Unarchive julia tar.gz to /opt/
   become: true

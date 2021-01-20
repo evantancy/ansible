@@ -59,7 +59,7 @@
     path: /etc/sysctl.conf
     marker: "# {mark} FLYCAP SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      net.core.rmem_max=37748736
-      net.core.rmem_default=37748736
+      net.core.rmem_max = 37748736
+      net.core.rmem_default = 37748736
       net.core.wmem_max = 37748736
       net.core.wmem_default = 37748736

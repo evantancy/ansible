@@ -43,11 +43,6 @@
 
 - meta: flush_handlers
 
-# - name: Run dpkg --configure -a
-#   become: true
-#   become_method: sudo
-#   command: dpkg --configure -a
-
 - name: Ensure Git is upgraded
   apt:
     name: git

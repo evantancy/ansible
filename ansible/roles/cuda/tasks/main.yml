@@ -12,7 +12,7 @@
     path: "{{ install_dir }}/{{ cuda_deb_file }}"
   register: cuda_local_deb
 
-- name: Download cuda local deb installer (big boi)
+- name: Download cuda local deb installer
   shell: "wget {{ nvidia_url }}/{{ cuda_tk_ver }}/local_installers/{{ cuda_deb_file }} -P {{ install_dir }} --quiet"
   when: cuda_local_deb.stat.exists == false
 
