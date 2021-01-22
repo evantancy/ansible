@@ -12,4 +12,4 @@
   become: true
   become_method: sudo
   apt:
-    deb: "{{ install_dir }}/{{ cuda_deb_file }}"
+    deb: "{{ install_dir }}/{{ baumer_deb_file }}"
