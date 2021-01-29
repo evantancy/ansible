@@ -29,15 +29,16 @@
     - libboost-thread-dev
     - tree
 
-- name: Uninstall update-notifier apt packages
+- name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
   become_method: sudo
   apt:
     name: "{{ item }}"
-    state: latest
+    state: absent
   loop:
     - update-notifier
     - update-notifier-common
+    - unattended-upgrades
 
 - name: Add apt repo for git
   become: true
