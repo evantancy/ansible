@@ -5,3 +5,4 @@ tensorrt_ver: "7.2.1.6"
 pcan_ver: "8.10.2"
 pycuda_ver: "2020.1"
 trtorch_ver: "v0.1.0"
+cxx11_ABI: true

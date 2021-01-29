@@ -26,8 +26,8 @@
     - flycap # For APM
     - baumer # For AQC
     # - netplan
-    - torch
-    - trtorch
+    # - torch
+    # - trtorch
     - peakcan
     - robosense
     - linuxcan

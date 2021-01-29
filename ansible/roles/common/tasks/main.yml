@@ -29,6 +29,16 @@
     - libboost-thread-dev
     - tree
 
+- name: Uninstall update-notifier apt packages
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - update-notifier
+    - update-notifier-common
+
 - name: Add apt repo for git
   become: true
   become_method: sudo
@@ -72,7 +82,6 @@
       set tabsize 4
       set tabstospaces
       set softwrap
-      set autoindent
     create: yes
 
 - name: Adding time stamps to bash history

@@ -14,15 +14,20 @@
   apt:
     deb: "{{ install_dir }}/{{ tensorrt_deb_file }}"
 
+# - name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
+#   become: true
+#   become_method: sudo
+#   apt_key:
+#     file: "{{ tensorrt_apt_key }}"
+#     state: present
+#   notify:
+#     - apt_update
+#     - apt_upgrade
+
 - name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
-  become: true
-  become_method: sudo
-  apt_key:
-    file: "{{ tensorrt_apt_key }}"
-    state: present
+  shell: "sudo apt-key add {{ tensorrt_apt_key }}"
   notify:
     - apt_update
-    - apt_upgrade
 
 - meta: flush_handlers
 
