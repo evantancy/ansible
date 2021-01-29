@@ -1,7 +1,12 @@
 # ansible_adventures
 
 # Setup
-First add the Ansible PPA so we can get the latest version of Ansible (2.9).
+First make sure you have python2.7 installed
+```bash
+sudo apt install python-minimal
+```
+
+Then add the Ansible PPA so we can get the latest version of Ansible (2.9).
 This enables some features that do not come with Ansible 2.5 that comes with Ubuntu 18.04
 ```bash
 sudo apt-add-repository ppa:ansible/ansible
