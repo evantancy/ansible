@@ -64,6 +64,8 @@ ansible -m setup localhost
 
 # TODO
 ## Roles
-- git (maybe?)
+- git LFS
 - vcstool
 - development & production (APM/AQC) playbooks
+- pcan API
+- xsens
