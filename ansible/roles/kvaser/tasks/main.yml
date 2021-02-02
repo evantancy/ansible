@@ -42,4 +42,3 @@
     - "ros-{{ ros_distro_dict[os_release] }}-delphi-esr-msgs"
     - "ros-{{ ros_distro_dict[os_release] }}-delphi-srr-msgs"
     - "ros-{{ ros_distro_dict[os_release] }}-kvaser-interface"
-    

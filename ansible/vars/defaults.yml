@@ -69,12 +69,12 @@ linuxcan_file: "linuxcan.tar.gz"
 linuxcan_install_dir: "/usr/src"
 
 # PeakCAN variables (aka PCAN)
-pcan_ver_list: ["8.10.2", "8.10.1", "8.10.0","8.9.3","8.9.0"]
+pcan_ver_list: ["8.11.0","8.10.2", "8.10.1", "8.10.0","8.9.3","8.9.0"]
+pcan_api_ver_list: ["4.4.2", "4.4.1", "4.4.0", "4.3.4", "4.3.3", "4.3.2", "4.3.1.3"]
 pcan_file: "peak-linux-driver-{{ pcan_ver }}.tar.gz"
 pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-driver-{{ pcan_ver }}.tar.gz"
 
 # Julia variables
-julia_ver: "1.5.2"
 julia_file: "julia-{{ julia_ver }}-linux-{{ arch }}.tar.gz"
 julia_init_setup_file: "ONEinitialsetup.jl"
 
