@@ -12,3 +12,26 @@
           rt = reset
           rb = rebase
     create: yes
+
+- name: Add apt repo for git
+  become: true
+  become_method: sudo
+  apt_repository:
+    repo: "{{ ppa_git }}"
+    state: present
+    update_cache: true
+  notify:
+    - post_add_apt_handler
+    - apt_update
+    - apt_upgrade
+
+- meta: flush_handlers
+
+- name: Ensure Git is upgraded
+  apt:
+    name: git
+    state: latest
+  register: upgrade_git_status
+  until: upgrade_git_status is success
+  delay: 1
+  retries: 3

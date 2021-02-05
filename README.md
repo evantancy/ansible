@@ -36,36 +36,112 @@ ansible -m setup hostname
 ansible -m setup localhost
 ```
 
+# Notes
+- Think of a playbook as a recipe, and roles are flavours to that recipe. Using this you can create production/development playbooks, and even use playbooks within playbooks
+- All downloaded files will be downloaded to `~/install_dir`
+- when running `sudo make install` add the `--debug=basic` argument so the status is printed at the end when running ansible playbooks in verbose mode i.e. `ansible-playbook -v some_playbook.yml`
+- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is will break unless you specify the retries/timeouts
+-
+
 
 # Roles included
 - check_vars:
+    - Check that variables placed in ansible/vars/settings.yml exist in their respective dictionaries defined in ansible/vars/defaults.yml
+        - Current checks include Eigen, CUDA Toolkit, ROS, PeakCAN, TRTorch (TensorRT Torch)
+- baumer:
+    - download baumer deb file from AIDrivers AWS if not present
+    - install baumer SDK via .deb
+- cmake:
+    - [Reference](https://apt.kitware.com/)
+    - install CMake related APT packages
+    - obtain Kitware GPG key
+    - install kitware-archive-keyring APT package
+    - remove GPG key
+    - upgrade CMake to latest stable version
 
 - common:
     - install some common APT packages
-    - add bash history timestamps
-    - add extra udev rules to elevate USB permissions
-    - Remove unattended-upgrades and some other settigs to disable dpkg lock
+    - Remove unattended-upgrades, update-notifier APT packages
+    - add nano settings in /etc/nanorc (adding settings in ~/.nanorc does not apply to sudo commands)
+    - add bash history timestamps, format DD/MM/YY HH:MM
+    - add extra udev rules to elevate ttyUSB* and ttyS* permissions
     - Create ~/install_dir to prevent clutter
-    - add settings for nano in ~/.nanorc
-- cmake:
-    - install CMake related APT packages
-    - obtain Kitware GPG key
-    - upgrade CMake
+
+- pip:
+    - install pip2 then pip3 **THIS WILL SET DEFAULT pip to pip3**
+    - upgrade pip2 and pip3
+
+- git:
+    - add some git alises seen [here](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases)
+    - upgrade git to latest version
+
 - eigen:
     - install Eigen related APT packages
     - download & unarchive eigen tar.bz2 from gitlab into ~/install_dir
-    - create build folder, make -j, and sudo make install (printing status at the end)
+    - create build folder, make -j, and sudo make install --debug=basic
 - cuda:
-    - add CUDA related paths to ~/.bashrc
-    - blacklist nouveau drivers in /etc/modprobe.d/blacklist.conf
-    - install cuda, cuda toolkit and related nvidia driver
-- ros:
-- robosense:
+    - basically follow all the steps [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation)
+    - add CUDA and cuDNN related paths to ~/.bashrc
+    - NOTE: this installs the corresponding NVIDIA Driver for the specified CUDA version
+- cudnn:
+    - basically follow all the steps [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installlinux-deb)
+    - fix broken symbolic links
 
+- flycap:
+    - unzip flycap___.tar.gz to ~/install_dir
+    - install Flycap SDK including unlisted dependencies that cause `./install_flycapture.sh` to break
+    - install pexpect, allowing for automatic responses to prompts using regexp
+    - change linux buffer sizes in /etc/sysctl.conf
+
+- g2o:
+    - install g2o from source
+
+- julia:
+    - download julia___.tar.gz to ~/install_dir
+    - unzip to /opt/
+    - create julia symbolic link
+    - copy ONEinitialsetup.jl script to ~/install_dir and run
+
+- kvaser:
+    - add autonomousstuff APT repo
+    - install kvaser related APT packages
+    - install ROS esr and srr messages, and ROS kvaser interface
+
+- linuxcan:
+    - download linuxcan.tar.gz to ~/install_dir
+    - make -j && sudo make install --debug=basic
+
+- peakcan:
+    - download peak-linux-driver___.tar.gz to ~/install_dir
+    - unzip && make -j all && sudo make install
+    - install pcan-view
+
+
+- ros:
+    - basically follow all the steps [here](https://wiki.ros.org/melodic/Installation/Ubuntu)
+    - install ROS desktop full, and additional ROS APT packages
+    - install python-catkin-tools
+- robosense:
+    - install robosense dependencies
+    -
+- sshd:
+- tensorrt:
+- torch:
+- trtorch:
+
+- xsens:
+    - ...
+- netplan:
+    - ...
+- jetson:
+    - ...
 # TODO
 ## Roles
 - git LFS
 - vcstool
-- development & production (APM/AQC) playbooks
-- pcan API
-- xsens
+- peakcan (pcan) API
+- xsens driver
+- diagnostics i.e. download different code samples, and libraries to check that stuff is working
+
+## Playbooks
+- development & production (APM/AQC)

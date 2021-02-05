@@ -14,8 +14,9 @@
   roles:
     - check_vars
     - common
-    - sshd
     - git
+    - pip
+    - sshd
     - cmake
     - eigen
     - g2o
@@ -26,9 +27,11 @@
     - julia
     - flycap # For APM
     - baumer # For AQC
+    # - jetson # For Nano, Xavier, AGX
     # - netplan
     # - torch
     # - trtorch
+    # - xsens # For IMU
     - peakcan
     - robosense
     - linuxcan

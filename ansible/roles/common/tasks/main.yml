@@ -17,10 +17,8 @@
     - htop
     - python
     - python-dev
-    - python-pip
     - python3
     - python3-dev
-    - python3-pip
     - build-essential
     - "linux-headers-{{ os_kernel }}"
     - xz-utils
@@ -40,57 +38,23 @@
     - update-notifier-common
     - unattended-upgrades
 
-- name: Add apt repo for git
+- name: Adding nano settings
   become: true
   become_method: sudo
-  apt_repository:
-    repo: "{{ ppa_git }}"
-    state: present
-    update_cache: true
-  notify:
-    - post_add_apt_handler
-    - apt_update
-    - apt_upgrade
-
-- meta: flush_handlers
-
-- name: Ensure Git is upgraded
-  apt:
-    name: git
-    state: latest
-  register: upgrade_git_status
-  until: upgrade_git_status is success
-  delay: 1
-  retries: 3
-
-- name: Upgrade python3 pip
-  pip:
-    name: pip
-    executable: pip3
-    extra_args: --upgrade
-
-- name: Upgrade python2 pip
-  pip:
-    name: pip
-    executable: pip2
-    extra_args: --upgrade
-
-- name: Adding nano settings
   blockinfile:
-    path: "{{ home_dir }}/.nanorc"
+    path: "/etc/nanorc"
     marker: "# {mark} USER SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       set tabsize 4
       set tabstospaces
       set softwrap
-    create: yes
 
 - name: Adding time stamps to bash history
   blockinfile:
     path: "{{ home_dir }}/.bashrc"
     marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      HISTTIMEFORMAT="%d/%m/%y %T "
+      HISTTIMEFORMAT="%D %l:%M"
 
 - name: Enabling ttyUSB* and ttyS* permissions
   become: true

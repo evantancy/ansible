@@ -67,3 +67,4 @@
   become: true
   become_method: sudo
   shell: update-initramfs -u
+  

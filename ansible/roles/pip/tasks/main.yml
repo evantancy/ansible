@@ -1,0 +1,22 @@
+---
+- name: Install pip2 then pip3
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - python-pip
+    - python3-pip
+
+- name: Upgrade python3 pip
+  pip:
+    name: pip
+    executable: pip3
+    extra_args: --upgrade
+
+- name: Upgrade python2 pip
+  pip:
+    name: pip
+    executable: pip2
+    extra_args: --upgrade
