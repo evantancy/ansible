@@ -92,14 +92,15 @@
     block: |
       HISTTIMEFORMAT="%d/%m/%y %T "
 
-- name: Enabling ttyUSB0 permissions
+- name: Enabling ttyUSB* and ttyS* permissions
   become: true
   become_method: sudo
   blockinfile:
     path: "/etc/udev/rules.d/60-extra-acl.rules"
     marker: "# {mark} USER PERMISSION SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      KERNEL=="ttyUSB0", TAG+="udev-acl", TAG+="uaccess"
+      KERNEL=="ttyUSB[0-9]*", TAG+="udev-acl", TAG+="uaccess"
+      KERNEL=="ttyS[0-30]*", TAG+="udev-acl", TAG+="uaccess"
     create: yes
 
 - name: "Creating installation directory at {{ install_dir }}"
