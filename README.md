@@ -6,13 +6,13 @@ First make sure you have python2.7 installed
 sudo apt install python-minimal
 ```
 
-Then add the Ansible PPA so we can get the latest version of Ansible, this enables some features that do not come with Ansible 2.5 that comes with Ubuntu 18.04
+Then add the Ansible PPA so we can get the latest version of Ansible >=2.9, this enables some features that do not come with Ansible 2.5 that comes with Ubuntu 18.04
 ```bash
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible
 ```
 # How to use this repository
-1. Edit settings.yml for different library versions you want
+1. Edit settings.yml for different library/driver versions you want
 2. Place your user password into secrets/secrets.yml using the following:
 ```
 ---
@@ -36,11 +36,13 @@ ansible -m setup localhost
 ```
 
 # Notes
-- Think of a playbook as a recipe, and roles are flavours to that recipe. Using this you can create production/development playbooks, and even use playbooks within playbooks
+- Ansible tasks and roles are procedural.
+- Think of a playbook as a recipe, and roles are flavours to that recipe. Using this you can create production/development playbooks, and even use playbooks within playbooks.
 - All downloaded files will be downloaded to `~/install_dir`
 - when running `sudo make install` add the `--debug=basic` argument so the status is printed at the end when running ansible playbooks in verbose mode i.e. `ansible-playbook -v some_playbook.yml`
-- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is will break unless you specify the retries/timeouts
--
+- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is will break unless you specify the retries/timeouts.
+- Handlers e.g. apt_update, by default, are only triggered at the end of any `tasks/main.yml` file. In order to trigger handlers immediately, use `meta` tasks e.g.`- meta: flush_handlers`
+- Define role dependencies in any role using the `meta` folder, see the **g2o role** for example.
 
 
 # Roles included
@@ -48,8 +50,9 @@ ansible -m setup localhost
     - Check that variables placed in ansible/vars/settings.yml exist in their respective dictionaries defined in ansible/vars/defaults.yml
         - Current checks include Eigen, CUDA Toolkit, ROS, PeakCAN, TRTorch (TensorRT Torch)
 - baumer:
-    - download baumer deb file from AIDrivers AWS if not present
+    - download baumer deb file from AWS if not present
     - install baumer SDK via .deb
+
 - cmake:
     - [Reference](https://apt.kitware.com/)
     - install CMake related APT packages
@@ -62,13 +65,13 @@ ansible -m setup localhost
     - install some common APT packages
     - Remove unattended-upgrades, update-notifier APT packages
     - add nano settings in /etc/nanorc (adding settings in ~/.nanorc does not apply to sudo commands)
-    - add bash history timestamps, format DD/MM/YY HH:MM
+    - add bash history timestamps, format DD/MM/YY HH:MM, for different formats see [here]()
     - add extra udev rules to elevate ttyUSB* and ttyS* permissions
     - Create ~/install_dir to prevent clutter
 
 - pip:
-    - install pip2 then pip3 **THIS WILL SET DEFAULT pip to pip3**
-    - upgrade pip2 and pip3
+    - install pip2 then pip3, **THIS WILL SET DEFAULT pip to pip3**
+    - upgrade pip2 and pip3 (this allows for latest pip features e.g. 2020-resolver to be used by default from pip 21.0 onwards)
 
 - git:
     - add some git alises seen [here](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases)
@@ -78,10 +81,12 @@ ansible -m setup localhost
     - install Eigen related APT packages
     - download & unarchive eigen tar.bz2 from gitlab into ~/install_dir
     - create build folder, make -j, and sudo make install --debug=basic
+
 - cuda:
     - basically follow all the steps [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation)
     - add CUDA and cuDNN related paths to ~/.bashrc
     - NOTE: this installs the corresponding NVIDIA Driver for the specified CUDA version
+
 - cudnn:
     - basically follow all the steps [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installlinux-deb)
     - fix broken symbolic links
@@ -115,7 +120,6 @@ ansible -m setup localhost
     - unzip && make -j all && sudo make install
     - install pcan-view
 
-
 - ros:
     - basically follow all the steps [here](https://wiki.ros.org/melodic/Installation/Ubuntu)
     - install ROS desktop full, and additional ROS APT packages
@@ -124,10 +128,18 @@ ansible -m setup localhost
     - install robosense dependencies
     -
 - sshd:
-- tensorrt:
-- torch:
-- trtorch:
+    - reinstall openssh-client that comes with ubuntu
+    - start sshd if not started
 
+- tensorrt:
+    - download tensorrt from AWS if not present
+    - install TensorRT via .deb, as well as Python and C++ development packages
+    - install pycuda2020.1 to /opt/
+
+- torch:
+    - basically follow all the steps [here](https://pytorch.org/get-started/locally/)
+- trtorch:
+    - ...
 - xsens:
     - ...
 - netplan:
