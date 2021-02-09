@@ -1,7 +1,7 @@
-# ansible_adventures
+# ansible
 
 # Setup
-First make sure you have python2.7 installed
+First make sure you have python2 installed
 ```bash
 sudo apt install python-minimal
 ```
@@ -12,7 +12,7 @@ sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible
 ```
 # How to use this repository
-1. Edit settings.yml for different library/driver versions you want
+1. Edit settings.yml for different library/driver versions you want, currently it's a bit shit since all versions in settings.yml have to be correct or whole playbooks won't run
 2. Place your user password into secrets/secrets.yml using the following:
 ```
 ---
@@ -39,8 +39,8 @@ ansible -m setup localhost
 - Ansible tasks and roles are procedural.
 - Think of a playbook as a recipe, and roles are flavours to that recipe. Using this you can create production/development playbooks, and even use playbooks within playbooks.
 - All downloaded files will be downloaded to `~/install_dir`
-- when running `sudo make install` add the `--debug=basic` argument so the status is printed at the end when running ansible playbooks in verbose mode i.e. `ansible-playbook -v some_playbook.yml`
-- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is will break unless you specify the retries/timeouts.
+- when running `sudo make install` add the `--debug=basic` argument so the status is printed at the end when running ansible playbooks in verbose mode i.e. `ansible-playbook -v some_playbook.yml`, since you probably can't read all the lines.
+- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is **will break unless** you specify the retries/timeouts.
 - Handlers e.g. apt_update, by default, are only triggered at the end of any `tasks/main.yml` file. In order to trigger handlers immediately, use `meta` tasks e.g.`- meta: flush_handlers`
 - Define role dependencies in any role using the `meta` folder, see the **g2o role** for example.
 
@@ -148,6 +148,8 @@ ansible -m setup localhost
     - ...
 # TODO
 ## Roles
+- move version checking from check_vars into individual roles
+- tell Ansible to look for -K password from secrets.yml
 - git LFS
 - vcstool
 - peakcan (pcan) API
