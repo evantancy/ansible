@@ -12,7 +12,6 @@
       shell: echo ""
       notify: apt_update
   roles:
-    - check_vars
     - common
     - git
     - pip
@@ -23,16 +22,18 @@
     - cuda
     - cudnn
     - tensorrt
-    - ros
+    # - ros
     - julia
+    - pytorch
+    - docker
+    # Sensor Drivers
     - flycap # For APM
     - baumer # For AQC
-    # - jetson # For Nano, Xavier, AGX
-    # - netplan
-    # - torch
-    # - trtorch
-    # - xsens # For IMU
     - peakcan
     - robosense
     - linuxcan
     - kvaser
+    # Misc
+    - ms_teams
+    - zoom
+    - vscode

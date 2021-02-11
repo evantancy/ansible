@@ -1,4 +1,11 @@
 ---
+- name: Check whether PeakCAN version exists in pcan_ver_list
+  assert:
+    that:
+      - pcan_ver in pcan_ver_list
+    fail_msg: "{{ pcan_ver }} doesn't exist in "
+    success_msg: "{{ pcan_ver }} exists in pcan_ver_list"
+
 - name: Check if PeakCAN has been downloaded already
   stat:
     path: "{{ install_dir}}/{{ pcan_file }}"

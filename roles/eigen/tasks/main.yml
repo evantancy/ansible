@@ -1,4 +1,15 @@
 ---
+- name: Collect eigen git tags
+  shell: git ls-remote --tags --exit-code --refs https://gitlab.com/libeigen/eigen.git | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g'
+  register: eigen_git_tags
+
+- name: Check whether specified Eigen version in Eigen tag list
+  assert:
+    that:
+      - eigen_ver in eigen_git_tags.stdout_lines
+    fail_msg: "{{ eigen_ver }} doesn't exist in taglist"
+    success_msg: "{{ eigen_ver }} exists in taglist"
+
 - name: Install eigen related apt packages
   become: true
   become_method: sudo
@@ -6,8 +17,8 @@
     name: "{{ item }}"
     state: present
   loop:
-    - libblas-dev
     - build-essential
+    - libblas-dev
     - libeigen3-dev
 
 - name: "Check if {{ eigen_file }} exists"

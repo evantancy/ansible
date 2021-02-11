@@ -14,6 +14,7 @@
   apt:
     deb: "{{ install_dir }}/{{ tensorrt_deb_file }}"
 
+# For some reason this doesn't work
 # - name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
 #   become: true
 #   become_method: sudo
@@ -22,7 +23,6 @@
 #     state: present
 #   notify:
 #     - apt_update
-#     - apt_upgrade
 
 - name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
   shell: "sudo apt-key add {{ tensorrt_apt_key }}"

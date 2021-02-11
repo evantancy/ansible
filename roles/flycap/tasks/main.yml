@@ -52,6 +52,8 @@
   apt:
     state: fixed
 
+# These buffer sizes were based on processing images:
+# 2048 * 1536 * 12 FPS * 8 bits
 - name: Changing linux buffer size
   become: true
   become_method: sudo

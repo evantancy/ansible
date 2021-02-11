@@ -1,4 +1,11 @@
 ---
+- name: Check whether CUDA Toolkit version exists in cuda_tk_dict
+  assert:
+    that:
+      - cuda_tk_ver in cuda_tk_dict.keys()
+    fail_msg: "{{ cuda_tk_ver }} doesn't exist in cuda_tk_dict"
+    success_msg: "{{ cuda_tk_ver }} exists in cuda_tk_dict"
+
 - name: Download cuda preferences file
   shell: "wget {{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }} -P {{ install_dir }} --quiet"
 
@@ -67,4 +74,3 @@
   become: true
   become_method: sudo
   shell: update-initramfs -u
-  

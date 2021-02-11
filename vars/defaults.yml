@@ -76,6 +76,7 @@ pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-dr
 
 # Julia variables
 julia_file: "julia-{{ julia_ver }}-linux-{{ arch }}.tar.gz"
+julia_git_tag: "v{{ julia_ver }}"
 julia_init_setup_file: "ONEinitialsetup.jl"
 
 # Flycap variables
@@ -84,3 +85,9 @@ flycap_file: "flycapture2-{{ flycap_ver }}-amd64.tar.gz"
 
 # Baumer variables
 baumer_deb_file: "baumer-gapi-sdk-linux-v2.10.1-gcc-4.8-x86-64.deb"
+
+# PyTorch variables
+torch_ver_dict:
+  "1.7.1+cu110":
+    torchvision_ver: "0.8.2+cu110"
+    torchaudio_ver: "0.7.2"

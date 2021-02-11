@@ -1,4 +1,15 @@
 ---
+- name: Collect Julia git tags
+  shell: git ls-remote --tags --exit-code --refs https://github.com/JuliaLang/julia.git | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g'
+  register: julia_git_tags
+
+- name: Check whether specified Julia version in Julia tag list
+  assert:
+    that:
+      - julia_git_tag in julia_git_tags.stdout_lines
+    fail_msg: "{{ julia_git_tag }} doesn't exist in taglist"
+    success_msg: "{{ julia_git_tag }} exists in taglist"
+
 - name: "Check if {{ julia_file }} exists"
   stat:
     path: "{{ install_dir }}/{{ julia_file }}"

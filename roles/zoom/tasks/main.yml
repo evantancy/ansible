@@ -1,0 +1,9 @@
+---
+- name: Download zoom deb file
+  shell: "wget https://zoom.us/client/latest/zoom_amd64.deb -P {{ install_dir }} --quiet"
+
+- name: Install zoom
+  become: true
+  become_method: sudo
+  apt:
+    deb: "{{ install_dir }}/zoom_amd64.deb"

@@ -1,4 +1,11 @@
 ---
+- name: Check whether cuDNN version corresponds to cuda_ver in cuda_tk_dict
+  assert:
+    that:
+      - cudnn_ver in cuda_tk_dict[cuda_tk_ver]["cudnn_ver"]
+    fail_msg: "{{ cudnn_ver }} doesn't match cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"]"
+    success_msg: "{{ cudnn_ver }} matches cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"]"
+
 - name: Check if cuDNN runtime deb file exists
   stat:
     path: "{{ install_dir }}/{{ cudnn_runtime_deb_file }}"

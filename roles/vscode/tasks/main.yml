@@ -1,0 +1,32 @@
+---
+- name: Get Microsoft GPG key
+  shell: |
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg \
+    && sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+
+- name: Remove downloaded GPG key
+  file:
+    path: packages.microsoft.gpg
+    state: absent
+
+- name: Add VSCode apt repo
+  shell: |
+    sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+
+- name: Install apt-transport-https
+  become: true
+  become_method: sudo
+  apt:
+    name: apt-transport-https
+    state: present
+  notify:
+    - apt_update
+
+- meta: flush_handlers
+
+- name: Install vscode
+  become: true
+  become_method: sudo
+  apt:
+    name: code
+    state: present

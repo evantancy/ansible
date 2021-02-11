@@ -1,0 +1,17 @@
+---
+- name: Add Microsoft Teams GPG key
+  shell: curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+- name: Add teams apt repo
+  shell: sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+  notify:
+    - apt_update
+
+- meta: flush_handlers
+
+- name: Install teams
+  become: true
+  become_method: sudo
+  apt:
+    name: teams
+    state: present

@@ -1,4 +1,11 @@
 ---
+- name: Check whether ROS version exists in ros_distro_dict
+  assert:
+    that:
+      - os_release in ros_distro_dict.keys()
+    fail_msg: "{{ os_release }} doesn't exist in ros_distro_dict"
+    success_msg: "{{ os_release }} exists in ros_distro_dict"
+
 - name: Add ROS software repository in /etc/apt/sources.list.d/
   become: true
   become_method: sudo

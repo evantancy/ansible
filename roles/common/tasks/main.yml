@@ -8,6 +8,8 @@
   loop:
     - git
     - terminator
+    - byobu
+    - blueman
     - vim
     - net-tools
     - gcc
@@ -15,17 +17,18 @@
     - curl
     - tlp
     - htop
+    - tree
+    - software-properties-common
+    - build-essential
+    - "linux-headers-{{ os_kernel }}"
+    - xz-utils
     - python
     - python-dev
     - python3
     - python3-dev
-    - build-essential
-    - "linux-headers-{{ os_kernel }}"
-    - xz-utils
     - python-setuptools
     - libboost-python-dev
     - libboost-thread-dev
-    - tree
 
 - name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
@@ -42,7 +45,7 @@
   become: true
   become_method: sudo
   blockinfile:
-    path: "/etc/nanorc"
+    path: /etc/nanorc
     marker: "# {mark} USER SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       set tabsize 4
@@ -54,13 +57,13 @@
     path: "{{ home_dir }}/.bashrc"
     marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      HISTTIMEFORMAT="%D %l:%M"
+      HISTTIMEFORMAT="%D %l:%M "
 
 - name: Enabling ttyUSB* and ttyS* permissions
   become: true
   become_method: sudo
   blockinfile:
-    path: "/etc/udev/rules.d/60-extra-acl.rules"
+    path: /etc/udev/rules.d/60-extra-acl.rules
     marker: "# {mark} USER PERMISSION SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       KERNEL=="ttyUSB[0-9]*", TAG+="udev-acl", TAG+="uaccess"

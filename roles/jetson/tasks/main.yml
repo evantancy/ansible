@@ -8,15 +8,15 @@
     sudo dpkg --configure -a
     sudo apt remove --purge gdm3
 
-- name: Add keyboard shortcuts for LXDE
-  blockinfile:
-    block: |
-      <!-- Launch LXTerminal with Ctrl+Alt+t-->
-          <keybind key="C-A-t">
-            <action name="Execute">
-              <command>lxterminal</command>
-            </action>
-          </keybind>
+# - name: Add keyboard shortcuts for LXDE
+#   blockinfile:
+#     block: |
+#       <!-- Launch LXTerminal with Ctrl+Alt+t-->
+#           <keybind key="C-A-t">
+#             <action name="Execute">
+#               <command>lxterminal</command>
+#             </action>
+#           </keybind>
 
 - name: Install some apt packages
   become: true

@@ -1,6 +1,0 @@
----
-dependencies:
-  - role: torch
-  - role: cuda
-  - role: cudnn
-  - role: tensorrt
