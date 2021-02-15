@@ -13,6 +13,7 @@
       notify: apt_update
   roles:
     - common
+    - terminal_velocity # tools to make you faster
     - git
     - pip
     - sshd

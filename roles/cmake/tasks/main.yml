@@ -14,8 +14,6 @@
 
 - name: Obtain Kitware signing key using wget
   shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
-  args:
-    warn: false
 
 - name: Add apt repo for cmake
   become: true

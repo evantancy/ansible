@@ -1,12 +1,13 @@
 ---
-- name: Uninstall openssh-client
-  become: true
-  become_method: sudo
-  apt:
-    name: "{{ item }}"
-    state: absent
-  loop:
-    - openssh-client
+# VERY BREAKY uninstalls snapd
+# - name: Uninstall openssh-client
+#   become: true
+#   become_method: sudo
+#   apt:
+#     name: "{{ item }}"
+#     state: absent
+#   loop:
+#     - openssh-client
 
 - name: Install openssh-server
   become: true
@@ -15,7 +16,8 @@
     name: "{{ item }}"
     state: present
   loop:
-    - openssh-server
+    - openssh-sftp-server
+    - snapd
 
 - name: Check status of sshd service
   service_facts:

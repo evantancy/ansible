@@ -8,6 +8,7 @@
   loop:
     - git
     - terminator
+    - snapd
     - byobu
     - blueman
     - vim
@@ -58,6 +59,7 @@
     marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       HISTTIMEFORMAT="%D %l:%M "
+      export PATH=$PATH:~/bin
 
 - name: Enabling ttyUSB* and ttyS* permissions
   become: true
@@ -70,7 +72,17 @@
       KERNEL=="ttyS[0-30]*", TAG+="udev-acl", TAG+="uaccess"
     create: yes
 
+- name: Copy ansible/files/.bash_aliases to ~/.bash_aliases
+  copy:
+    src: files/.bash_aliases
+    dest: ~/.bash_aliases
+
 - name: "Creating installation directory at {{ install_dir }}"
   file:
     path: "{{ install_dir }}"
+    state: directory
+
+- name: Create bin directory at ~/bin
+  file:
+    path: ~/bin
     state: directory

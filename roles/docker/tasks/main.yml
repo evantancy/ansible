@@ -27,14 +27,12 @@
 
 - name: Add docker GPG key
   shell: |
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
-    && sudo apt-key fingerprint 0EBFCD88
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+    sudo apt-key fingerprint 0EBFCD88
 
 - name: Add docker apt repo
   shell: |
-    sudo add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-    {{ os_release }} stable"
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ os_release }} stable"
   notify: apt_update
 
 - meta: flush_handlers
@@ -68,3 +66,7 @@
     state: present
   loop:
     - nvidia-docker2
+
+# # USE AT YOUR OWN RISK
+# - name: "Add user to docker group, to remove need for sudo"
+#   shell: sudo usermod -aG docker $USER

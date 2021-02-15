@@ -1,0 +1,90 @@
+---
+- name: Check if ~/bin/fzf is present
+  stat:
+    path: ~/bin/fzf
+  register: fzf_folder
+
+- name: Git clone fzf
+  shell: |
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/bin/fzf
+  when: fzf_folder.stat.exists == false
+
+- name: Run fzf installation script
+  expect:
+    chdir: ~/bin
+    command: fzf/install
+    responses:
+      "auto-completion?": "y"
+      "key bindings?": "y"
+      "shell configuration files?": "n"
+
+- name: Move ~/.fzf.bash to ~/bin
+  shell: |
+    mv ~/.fzf.bash ~/bin
+
+- name: Source fzf bash
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} FZF SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      [ -f ~/bin/.fzf.bash ] && source ~/bin/.fzf.bash
+
+- name: Install silversearcher-ag via APT
+  become: true
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - silversearcher-ag
+
+- name: Install universal-ctags via snap
+  become: true
+  become_method: sudo
+  snap:
+    name: universal-ctags
+    state: present
+
+- name: Install ripgrep via snap
+  become: true
+  become_method: sudo
+  snap:
+    name: ripgrep
+    state: present
+    classic: true
+
+- name: Check if ~/bin/z is present
+  stat:
+    path: ~/bin/z
+  register: z_folder
+
+- name: Git clone z - jump around to ~/bin
+  shell: |
+    git clone https://github.com/rupa/z.git ~/bin/z
+  when: z_folder.stat.exists == false
+
+- name: Source ~/bin/z.sh to enable z
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} Z SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      source ~/bin/z/z.sh
+
+- name: Install batcat
+  become: true
+  become_method: sudo
+  snap:
+    name: batcat
+    state: present
+
+- name: Install tldr
+  shell: |
+    curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr && \
+    chmod +x ~/bin/tldr
+
+- name: Enable tldr autocomplete
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} TLDR SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      complete -W "$(tldr 2>/dev/null --list)" tldr
