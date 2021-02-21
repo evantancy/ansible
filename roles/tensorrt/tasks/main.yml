@@ -10,14 +10,12 @@
 
 - name: Install TensorRT via deb
   become: true
-  become_method: sudo
   apt:
     deb: "{{ install_dir }}/{{ tensorrt_deb_file }}"
 
 # For some reason this doesn't work
 # - name: Add TensorRT apt key && sudo apt update && sudo apt upgrade -y
 #   become: true
-#   become_method: sudo
 #   apt_key:
 #     file: "{{ tensorrt_apt_key }}"
 #     state: present
@@ -33,14 +31,12 @@
 
 - name: Install TensorRT
   become: true
-  become_method: sudo
   apt:
     name: tensorrt
     state: present
 
 - name: Installing TensorRT packages for running and building Python apps
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -54,7 +50,6 @@
 
 - name: Installing TensorRT packages for running and building C++ apps
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -88,7 +83,6 @@
 
 - name: "Unzipping {{ pycuda_file }} to /opt/"
   become: true
-  become_method: sudo
   unarchive:
     src: "{{ install_dir }}/{{ pycuda_file }}"
     dest: /opt/

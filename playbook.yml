@@ -23,7 +23,7 @@
     - cuda
     - cudnn
     - tensorrt
-    # - ros
+    - ros
     - julia
     - pytorch
     - docker
@@ -38,3 +38,4 @@
     - ms_teams
     - zoom
     - vscode
+    # - jetson # For Jetson family devices

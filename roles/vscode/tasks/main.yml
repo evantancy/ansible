@@ -15,7 +15,6 @@
 
 - name: Install apt-transport-https
   become: true
-  become_method: sudo
   apt:
     name: apt-transport-https
     state: present
@@ -26,7 +25,6 @@
 
 - name: Install vscode
   become: true
-  become_method: sudo
   apt:
     name: code
     state: present

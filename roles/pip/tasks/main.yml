@@ -1,7 +1,6 @@
 ---
 - name: Install pip2 then pip3
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: latest

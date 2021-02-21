@@ -1,7 +1,6 @@
 ---
 - name: Install g2o apt dependencies
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -34,7 +33,6 @@
 
 - name: sudo make install
   become: true
-  become_method: sudo
   shell: make install --debug=basic
   args:
     chdir: "{{ install_dir }}/g2o/build/"

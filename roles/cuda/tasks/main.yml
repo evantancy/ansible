@@ -11,7 +11,6 @@
 
 - name: Add cuda preferences to apt
   become: true
-  become_method: sudo
   shell: "mv {{ install_dir }}/{{ cuda_apt_pref_pin }} /etc/apt/preferences.d/cuda-repository-pin-600"
 
 - name: Check if local deb installer exists
@@ -25,13 +24,11 @@
 
 - name: Install cuda via .deb file
   become: true
-  become_method: sudo
   apt:
     deb: "{{ install_dir }}/{{ cuda_deb_file }}"
 
 - name: Add apt key for cuda
   become: true
-  become_method: sudo
   apt_key:
     file: "{{ cuda_apt_key }}"
     state: present
@@ -42,7 +39,6 @@
 
 - name: "Install {{ cuda_apt_pkg }} and {{ cuda_tk_apt_pkg }}"
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -62,7 +58,6 @@
 
 - name: Adding settings to /etc/modprobe.d/blacklist.conf
   become: true
-  become_method: sudo
   blockinfile:
     path: /etc/modprobe.d/blacklist.conf
     marker: "# {mark} CUDA TOOLKIT SETTINGS - ANSIBLE MANAGED BLOCK"
@@ -72,5 +67,4 @@
 
 - name: sudo update-initramfs -u
   become: true
-  become_method: sudo
   shell: update-initramfs -u

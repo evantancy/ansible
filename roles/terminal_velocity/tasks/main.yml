@@ -31,7 +31,6 @@
 
 - name: Install silversearcher-ag via APT
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -40,14 +39,12 @@
 
 - name: Install universal-ctags via snap
   become: true
-  become_method: sudo
   snap:
     name: universal-ctags
     state: present
 
 - name: Install ripgrep via snap
   become: true
-  become_method: sudo
   snap:
     name: ripgrep
     state: present
@@ -72,7 +69,6 @@
 
 - name: Install batcat
   become: true
-  become_method: sudo
   snap:
     name: batcat
     state: present

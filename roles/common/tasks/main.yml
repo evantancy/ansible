@@ -1,7 +1,6 @@
 ---
 - name: Install some common apt packages
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: latest
@@ -33,7 +32,6 @@
 
 - name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: absent
@@ -44,7 +42,6 @@
 
 - name: Adding nano settings
   become: true
-  become_method: sudo
   blockinfile:
     path: /etc/nanorc
     marker: "# {mark} USER SETTINGS - ANSIBLE MANAGED BLOCK"
@@ -63,7 +60,6 @@
 
 - name: Enabling ttyUSB* and ttyS* permissions
   become: true
-  become_method: sudo
   blockinfile:
     path: /etc/udev/rules.d/60-extra-acl.rules
     marker: "# {mark} USER PERMISSION SETTINGS - ANSIBLE MANAGED BLOCK"

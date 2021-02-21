@@ -8,7 +8,6 @@
 
 - name: Add ROS software repository in /etc/apt/sources.list.d/
   become: true
-  become_method: sudo
   blockinfile:
     path: /etc/apt/sources.list.d/ros-latest.list
     marker: "# {mark} ROS SETTINGS - ANSIBLE MANAGED BLOCK"
@@ -19,7 +18,6 @@
 
 - name: Setup ROS apt key with ID
   become: true
-  become_method: sudo
   apt_key:
     keyserver: hkp://keyserver.ubuntu.com:80
     id: C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
@@ -31,14 +29,12 @@
 
 - name: "Install ros-{{ ros_distro_dict[os_release] }}-desktop-full"
   become: true
-  become_method: sudo
   apt:
     name: "ros-{{ ros_distro_dict[os_release] }}-desktop-full"
     state: present
 
 - name: Installing some ROS related apt packages
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present
@@ -63,7 +59,6 @@
 
 - name: Adding ROS settings to ~/.bashrc
   become: true
-  become_method: sudo
   blockinfile:
     path: "{{ home_dir }}/.bashrc"
     marker: "# {mark} ROS SETTINGS - ANSIBLE MANAGED BLOCK"
@@ -72,7 +67,6 @@
 
 - name: Install additional ROS packages
   become: true
-  become_method: sudo
   apt:
     name: "{{ item }}"
     state: present

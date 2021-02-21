@@ -88,6 +88,7 @@ ansible -m setup localhost > ansible_facts_saved.txt
 
 - git:
     - add some git aliases seen [here](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases)
+    - add pretty git logging aliases [credits](https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs)
     - upgrade git to latest version
 
 - docker:

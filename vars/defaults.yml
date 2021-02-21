@@ -1,22 +1,27 @@
 ---
 home_dir: "{{ ansible_env.HOME }}"
 install_dir: "{{ home_dir }}/install_dir"
-os_distro: "{{ ansible_distribution | lower }}"
-os_distro_ver: "{{ ansible_distribution_version | replace('.','') }}"
-# Includes . delimiter
-os_release: "{{ ansible_distribution_release }}"
-os_kernel: "{{ ansible_kernel }}"
+os_distro: "{{ ansible_distribution | lower }}" # ubuntu
+os_distro_ver: "{{ ansible_distribution_version | replace('.','') }}" # 1804
+os_release: "{{ ansible_distribution_release }}" # bionic
+os_kernel: "{{ ansible_kernel }}" # 5.4.0-XX-generic
 arch: "{{ ansible_architecture }}"
 
-# all BASE URLs being used
-eigen_url: "https://gitlab.com/libeigen/eigen/-/archive"
+# some BASE URLs being used
 aid_aws_url: "https://ai-debs.s3.amazonaws.com"
 nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
+
+# APT Repositories
+cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
+cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
+ppa_git: "ppa:git-core/ppa"
+ppa_kvaser: "ppa:astuff/kvaser-linux"
 
 # CMake variables
 kitware_gpg_key: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
 
 # Eigen variables
+eigen_url: "https://gitlab.com/libeigen/eigen/-/archive"
 eigen_file: "eigen-{{ eigen_ver }}.tar.bz2"
 
 # g2o variables
@@ -49,12 +54,6 @@ cudnn_runtime_deb_url: "{{ aid_aws_url }}/{{ cudnn_runtime_deb_file | replace('+
 cudnn_devel_deb_file: "libcudnn8-dev_{{ cuda_tk_dict[cuda_tk_ver][\"cudnn_ver\"] }}-1+cuda{{ cuda_tk_ver[:4] }}_amd64.deb"
 cudnn_devel_deb_url: "{{ aid_aws_url }}/{{ cudnn_devel_deb_file | replace('+','%2B') }}"
 
-# APT Repositories
-cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
-cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
-ppa_git: "ppa:git-core/ppa"
-ppa_kvaser: "ppa:astuff/kvaser-linux"
-
 # TensorRT variables
 tensorrt_tag: "cuda{{ cuda_tk_ver[:4] }}-trt{{ tensorrt_ver }}-ga-20201007"
 tensorrt_deb_file: "nv-tensorrt-repo-{{ os_distro }}{{ os_distro_ver }}-{{ tensorrt_tag }}_1-1_amd64.deb"
@@ -77,7 +76,7 @@ pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-dr
 # Julia variables
 julia_file: "julia-{{ julia_ver }}-linux-{{ arch }}.tar.gz"
 julia_git_tag: "v{{ julia_ver }}"
-julia_init_setup_file: "ONEinitialsetup.jl"
+julia_init_setup_file: "ONEinitialsetup.jl" # located in ansible/files/
 
 # Flycap variables
 flycap_ver: "2.13.3.31"
