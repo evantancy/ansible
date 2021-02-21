@@ -12,30 +12,42 @@ sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible
 ```
 
+
+
 # How to use this repository
 1. Edit settings.yml for different library or driver versions you want.
-2. Place your user password into secrets/secrets.yml (by default secrets.yml isn't created) using the following:
+2. Place your user password into `ansible/secrets/secrets.yml` (by default secrets.yml isn't created) using the following:
 ```
 ---
 my_password: "asdfg" #for example
 ```
 3. Run specific playbook i.e. playbook.yml that includes different libraries that you want, see [Running Playbooks](#running-playbooks)
 
+
+
 ## Running playbooks
+### Parsing my_password variable in secrets.yml
+This is ideal since you only need to type your password once. Change `playbook_name.yml` to your desired environment yml file, e.g. `development.yml`, `production_apm.yml` or `production_aqc.yml`
+```bash
+cd ansible/
+ansible-playbook -v playbook_name.yml --extra-vars "@secrets/secrets.yml" \
+--extra-vars "ansible_sudo_pass={{ my_password }}"
+```
+
+
 ### With sudo password prompt
 Run any playbook in verbose mode aka spam the terminal mode using the following:
 ```bash
 cd ansible/
-ansible-playbook -v -K playbook.yml # -K flag or --ask-become-pass
-# ansible-playbook -v -K development.yml
-# ansible-playbook -v -K production.yml
+# --ask-become-pass or -K flag
+# ansible-playbook -v --ask-become-pass full_playbook.yml # this playbook is meant to show you how to format your own playbooks, it contains all roles within this repo
+# some examples
+ansible-playbook -v -K development.yml
+ansible-playbook -v -K production_apm.yml
+ansible-playbook -v -K production_aqc.yml
 ```
-### Parsing my_password variable in secrets.yml
-This is ideal since you only need to type your password once
-```bash
-ansible-playbook -v playbook.yml --extra-vars "@secrets/secrets.yml" \
---extra-vars "ansible_sudo_pass={{ my_password }}"
-```
+
+
 
 # Viewing ansible facts
 To view all Ansible related variables for a specific host run:
