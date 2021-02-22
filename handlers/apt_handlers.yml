@@ -3,7 +3,6 @@
 # START HANDLER CHAIN
 - name: post_add_apt_handler
   become: true
-  become_method: sudo
   file:
     path: "{{ item }}"
     state: absent
@@ -15,7 +14,6 @@
 
 - name: remove_dpkg_lock
   become: true
-  become_method: sudo
   file:
     path: "{{ item }}"
     state: absent
@@ -27,7 +25,6 @@
 
 - name: disable_unattended_updates
   become: true
-  become_method: sudo
   lineinfile:
     path: "{{ item }}"
     regexp: ^APT::Periodic::Update-Package-Lists
@@ -40,7 +37,6 @@
 
 - name: disable_unattended_upgrades
   become: true
-  become_method: sudo
   lineinfile:
     path: /etc/apt/apt.conf.d/20auto-upgrades
     regexp: ^APT::Periodic::Unattended-Upgrade
@@ -50,7 +46,6 @@
 
 - name: remove_unattended_upgrades
   become: true
-  become_method: sudo
   apt:
     name: unattended-upgrades
     state: absent
@@ -58,13 +53,11 @@
 
 - name: apt_update
   become: true
-  become_method: sudo
   apt:
     upgrade: no
     update_cache: true
 
 - name: apt_upgrade
   become: true
-  become_method: sudo
   apt:
     upgrade: true

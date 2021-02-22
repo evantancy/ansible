@@ -73,6 +73,13 @@
     name: batcat
     state: present
 
+- name: Add batcat alias
+  blockinfile:
+    path: ~/.bash_aliases
+    marker: "# {mark} BATCAT SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      alias bat='batcat'
+
 - name: Install tldr
   shell: |
     curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr && \

@@ -1,5 +1,12 @@
 # ansible
 
+
+
+# Why does this repository exist?
+So whenever someone old or new needs to reinstall their setup, or configure their machine, they don't have to individually install each component and take ages to get up and running.
+
+
+
 # Setup
 First make sure you have python2 installed
 ```bash
@@ -16,7 +23,7 @@ sudo apt update && sudo apt install ansible
 
 # How to use this repository
 1. Edit settings.yml for different library or driver versions you want.
-2. Place your user password into `ansible/secrets/secrets.yml` (by default secrets.yml isn't created) using the following:
+2. Place your user password into `ansible/secrets/secrets.yml` (**by default secrets.yml isn't created**) using the following:
 ```
 ---
 my_password: "asdfg" #for example
@@ -24,8 +31,8 @@ my_password: "asdfg" #for example
 3. Run specific playbook i.e. playbook.yml that includes different libraries that you want, see [Running Playbooks](#running-playbooks)
 
 
-
 ## Running playbooks
+
 ### Parsing my_password variable in secrets.yml
 This is ideal since you only need to type your password once. Change `playbook_name.yml` to your desired environment yml file, e.g. `development.yml`, `production_apm.yml` or `production_aqc.yml`
 ```bash
@@ -34,14 +41,14 @@ ansible-playbook -v playbook_name.yml --extra-vars "@secrets/secrets.yml" \
 --extra-vars "ansible_sudo_pass={{ my_password }}"
 ```
 
-
 ### With sudo password prompt
 Run any playbook in verbose mode aka spam the terminal mode using the following:
 ```bash
 cd ansible/
 # --ask-become-pass or -K flag
-# ansible-playbook -v --ask-become-pass full_playbook.yml # this playbook is meant to show you how to format your own playbooks, it contains all roles within this repo
-# some examples
+# this playbook is meant to show you how to format your own playbooks, it contains all roles within this repo
+# ansible-playbook -v --ask-become-pass full_playbook.yml
+# other examples
 ansible-playbook -v -K development.yml
 ansible-playbook -v -K production_apm.yml
 ansible-playbook -v -K production_aqc.yml
@@ -56,6 +63,8 @@ ansible -m setup hostname
 ansible -m setup localhost # e.g. for localhost
 ansible -m setup localhost > ansible_facts_saved.txt
 ```
+
+
 
 # Notes
 - Ansible tasks and roles are procedural.
@@ -72,6 +81,8 @@ ansible -m setup localhost > ansible_facts_saved.txt
 - Handlers e.g. apt_update, by default, are only triggered at the end of any `tasks/main.yml` file. In order to trigger handlers immediately, use meta tasks in role_name/tasks/main.yml e.g.`- meta: flush_handlers`
 - Define role dependencies in any role using the `meta` folder, see the **g2o role** for example.
 
+
+
 # Roles included
 - baumer:
     - download baumer deb file from AWS if not present
@@ -83,35 +94,7 @@ ansible -m setup localhost > ansible_facts_saved.txt
     - obtain Kitware GPG key
     - install kitware-archive-keyring APT package
     - remove GPG key (because they tend to expire or some shit)
-    - upgrade CMake to latest stable version
-
-- common:
-    - install some common APT packages
-    - Remove unattended-upgrades, update-notifier APT packages
-    - add nano settings in /etc/nanorc (adding settings in ~/.nanorc does not apply to sudo commands)
-    - add bash history timestamps, format DD/MM/YY HH:MM, for different formats see [here](https://www.networkworld.com/article/2923844/bash-history-remembering-what-you-did-and-when-you-did-it.html)
-    - add extra udev rules to elevate ttyUSB* and ttyS* permissions
-    - Create ~/install_dir to prevent clutter
-
-- pip:
-    - install pip2 then pip3
-    - upgrade pip2 and pip3 (this allows for latest pip features e.g. 2020-resolver to be used by default from pip>=21.0)
-    - set default pip to pip3
-
-- git:
-    - add some git aliases seen [here](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases)
-    - add pretty git logging aliases [credits](https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs)
-    - upgrade git to latest version
-
-- docker:
-    - removes previous versions of docker
-    - installs docker
-    - installs NVIDIA Container Toolkit
-
-- eigen:
-    - install Eigen related APT packages
-    - download & unarchive eigen tar.bz2 from gitlab into ~/install_dir
-    - create build folder, make -j, and sudo make install --debug=basic
+    - upgrade CMake to latest stable version (see [Reference](https://apt.kitware.com/) if you want release candidates)
 
 - cuda:
     - basically follow all the steps [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation)
@@ -122,6 +105,24 @@ ansible -m setup localhost > ansible_facts_saved.txt
     - basically follow all the steps [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installlinux-deb)
     - fix broken symbolic links
 
+- docker:
+    - removes previous versions of docker
+    - installs docker
+    - installs NVIDIA Container Toolkit
+
+- common:
+    - install some common APT packages
+    - Remove unattended-upgrades, update-notifier APT packages
+    - add nano settings in /etc/nanorc (adding settings in ~/.nanorc does not apply to sudo commands)
+    - add bash history timestamps, format DD/MM/YY HH:MM, for different formats see [here](https://www.networkworld.com/article/2923844/bash-history-remembering-what-you-did-and-when-you-did-it.html)
+    - add extra udev rules to elevate ttyUSB* and ttyS* permissions
+    - Create ~/install_dir to prevent clutter
+
+- eigen:
+    - install Eigen related APT packages
+    - download & unarchive eigen tar.bz2 from gitlab into ~/install_dir
+    - create build folder, make -j, and sudo make install --debug=basic
+
 - flycap:
     - unzip flycap___.tar.gz to ~/install_dir
     - install Flycap SDK including unlisted dependencies that cause `./install_flycapture.sh` to break
@@ -130,6 +131,14 @@ ansible -m setup localhost > ansible_facts_saved.txt
 
 - g2o:
     - install g2o from source
+
+- git:
+    - add some git aliases seen [here](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases)
+    - add pretty git logging aliases [credits](https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs)
+    - upgrade git to latest version
+
+- jetson:
+    - ...
 
 - julia:
     - download julia___.tar.gz to ~/install_dir
@@ -146,39 +155,52 @@ ansible -m setup localhost > ansible_facts_saved.txt
     - download linuxcan.tar.gz to ~/install_dir
     - make -j && sudo make install --debug=basic
 
+- ms_teams:
+    - install Microsoft Teams
+
 - peakcan:
     - download peak-linux-driver___.tar.gz to ~/install_dir
-    - unzip && make -j all && sudo make install
+    - unzip && make -j all && sudo make install (peakcan driver)
     - install pcan-view
+
+- pip:
+    - install pip2 then pip3
+    - upgrade pip2 and pip3 (this allows for latest pip features e.g. 2020-resolver to be used by default from pip>=21.0)
+    - set default pip to pip3
+
+- pytorch:
+    - basically follow all the steps [here](https://pytorch.org/get-started/locally/) VERY JANK atm
+
+- robosense:
+    - install robosense related APT
+    - create symlink to enable RSView on Ubuntu
 
 - ros:
     - basically follow all the steps [here](https://wiki.ros.org/melodic/Installation/Ubuntu)
     - install ROS desktop full, and additional ROS APT packages
     - install python-catkin-tools
 
-- robosense:
-    - install robosense related APT
-    - create symlink to enable RSView on Ubuntu
-
 - sshd:
     - reinstall openssh-client that comes with Ubuntu
-    - start sshd if not started
+    - start sshd service if not started
 
 - tensorrt:
     - download tensorrt from AWS if not present
     - install TensorRT via .deb, as well as Python and C++ development packages
     - install pycuda2020.1 to /opt/
-
-- pytorch:
-    - basically follow all the steps [here](https://pytorch.org/get-started/locally/)
-
-- jetson:
-    - ...
+- terminal_velocity:
+    - install fzf from https://github.com/junegunn/fzf.git into ~/bin(see [keybindings](https://github.com/junegunn/fzf#key-bindings-for-command-line))
+    - install [silversearcher-ag](https://github.com/ggreer/the_silver_searcher) (so you don't need to `cat file | grep text` just do `ag text file_you_want_to_search`)
+    - install [universal-ctags](https://github.com/universal-ctags/ctags)
+    - install [ripgrep](https://github.com/BurntSushi/ripgrep) (search multiple files for text in cwd)
+    - install [z](https://github.com/rupa/z)
+    - install [batcat](https://github.com/sharkdp/bat) (a better `cat` with git integration)
+    - install [tldr](https://github.com/raylee/tldr-sh-client) (a substitute to manpages)
 
 - vscode:
     - install Visual Studio Code (stable)
-- ms_teams:
-    - install Microsoft Teams
+    - install VSCode extensions if setting is enabled in `settings.yml`, see recommended [VSCode Tools](vscode_tools.md)
+
 - zoom:
     - install Zoom
 
@@ -194,6 +216,7 @@ ansible -m setup localhost > ansible_facts_saved.txt
 
 # TODO
 ## Roles
+- jetson -> complete role
 - xrdp #For remote access
 - ifenslave
 - git LFS

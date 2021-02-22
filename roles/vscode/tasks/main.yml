@@ -28,3 +28,30 @@
   apt:
     name: code
     state: present
+
+- name: Install vscode extensions
+  shell: "code --install-extension {{ item }}"
+  loop:
+    # General
+    - Shan.code-settings-sync
+    - 2gua.rainbow-brackets
+    - fabiospampinato.vscode-diff
+    # Python
+    - eriklynd.json-tools
+    - ms-python.python
+    - njpwerner.autodocstring
+    - KevinRose.vsc-python-indent
+    # C/C++
+    - llvm-vs-code-extensions.vscode-clangd
+    # Ansible
+    - timonwong.ansible-autocomplete
+    # Docker
+    - ms-azuretools.vscode-docker
+    # Markdown
+    - shd101wyy.markdown-preview-enhanced
+    # Themes
+    - sdras.night-owl
+    - ajshortt.tokyo-hack
+    # Bash
+    - timonwong.shellcheck
+  when: vscode_extensions_install == true

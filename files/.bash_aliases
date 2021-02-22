@@ -1,3 +1,4 @@
+# ANSIBLE MANAGED FILE
 alias sysupd="sudo apt update && sudo apt upgrade -y"
 alias q='exit'
 alias c='clear'
@@ -13,3 +14,4 @@ alias gst="git status"
 alias gpl="git pull"
 alias gps="git push"
 alias de="deactivate" # for working with virtual environments
+# ANSIBLE MANAGED FILE
