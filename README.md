@@ -109,6 +109,7 @@ ansible -m setup localhost > ansible_facts_saved.txt
     - removes previous versions of docker
     - installs docker
     - installs NVIDIA Container Toolkit
+    - installs docker-compose
 
 - common:
     - install some common APT packages
