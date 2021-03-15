@@ -9,6 +9,11 @@
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/bin/fzf
   when: fzf_folder.stat.exists == false
 
+- name: Install pexpect
+  pip:
+    name: pexpect
+    executable: pip2
+
 - name: Run fzf installation script
   expect:
     chdir: ~/bin

@@ -12,14 +12,14 @@
 - name: Add VSCode apt repo
   shell: |
     sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+  notify:
+    - apt_update
 
 - name: Install apt-transport-https
   become: true
   apt:
     name: apt-transport-https
     state: present
-  notify:
-    - apt_update
 
 - meta: flush_handlers
 
@@ -55,3 +55,20 @@
     # Bash
     - timonwong.shellcheck
   when: vscode_extensions_install == true
+
+- name: Download JetBrains Mono font
+  shell: "wget https://download.jetbrains.com/fonts/JetBrainsMono-2.225.zip -P {{ install_dir }} --quiet"
+
+- name: Unzip font file
+  unarchive:
+    src: "{{ install_dir }}/JetBrainsMono-2.225.zip"
+    dest: "{{ install_dir }}"
+
+- name: Install font-manager
+  become: true
+  apt:
+    name: font-manager
+    state: present
+
+- name: Install
+  shell: "cd {{ install_dir }}/fonts/ttf/ && font-manager -i *"
