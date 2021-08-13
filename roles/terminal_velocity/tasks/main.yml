@@ -40,8 +40,7 @@
   register: ripgrep_deb_file
 
 - name: Download
-  shell: |
-    "cd {{ install_dir }} && curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
+  shell: "curl -L https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb -o {{ install_dir }}/ripgrep_13.0.0_amd64.deb"
   when: ripgrep_deb_file.stat.exists == false
 
 - name: Install ripgrep
