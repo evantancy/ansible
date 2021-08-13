@@ -15,13 +15,13 @@
   notify:
     - apt_update
 
+- meta: flush_handlers
+
 - name: Install apt-transport-https
   become: true
   apt:
     name: apt-transport-https
     state: present
-
-- meta: flush_handlers
 
 - name: Install vscode
   become: true

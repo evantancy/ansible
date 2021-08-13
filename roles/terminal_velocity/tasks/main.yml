@@ -34,26 +34,21 @@
     block: |
       [ -f ~/bin/.fzf.bash ] && source ~/bin/.fzf.bash
 
-- name: Install silversearcher-ag via APT
+- name: Check if ripgrep deb file is present
+  stat:
+    path: "{{ install_dir }}/ripgrep_13.0.0_amd64.deb"
+  register: ripgrep_deb_file
+
+- name: Download
+  shell: |
+    "cd {{ install_dir }} && curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
+  when: ripgrep_deb_file.stat.exists == false
+
+- name: Install ripgrep
   become: true
   apt:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - silversearcher-ag
+    deb: "{{ install_dir }}/ripgrep_13.0.0_amd64.deb"
 
-- name: Install universal-ctags via snap
-  become: true
-  snap:
-    name: universal-ctags
-    state: present
-
-- name: Install ripgrep via snap
-  become: true
-  snap:
-    name: ripgrep
-    state: present
-    classic: true
 
 - name: Check if ~/bin/z is present
   stat:
@@ -71,19 +66,6 @@
     marker: "# {mark} Z SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       source ~/bin/z/z.sh
-
-- name: Install batcat
-  become: true
-  snap:
-    name: batcat
-    state: present
-
-- name: Add batcat alias
-  blockinfile:
-    path: ~/.bash_aliases
-    marker: "# {mark} BATCAT SETTINGS - ANSIBLE MANAGED BLOCK"
-    block: |
-      alias bat='batcat'
 
 - name: Install tldr
   shell: |

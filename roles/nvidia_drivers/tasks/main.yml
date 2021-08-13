@@ -1,0 +1,14 @@
+- name: Add apt repo for nvidia drivers
+  become: true
+  apt_repository:
+    repo: "{{ ppa_nvidia }}"
+    state: present
+    update_cache: true
+  notify:
+    - post_add_apt_handler
+    - apt_update
+
+- name: Install nvidia-drivers
+  become: true
+  shell: |
+    sudo ubuntu-drivers autoinstall

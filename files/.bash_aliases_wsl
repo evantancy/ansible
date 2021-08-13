@@ -1,0 +1,10 @@
+# WSL 2 specific settings.
+alias explorer="explorer.exe ."
+alias win_dl="cd /mnt/c/Users/evan/Downloads"
+alias win_doc="cd /mnt/c/Users/evan/Documents"
+alias win_home="cd /mnt/c/Users/evan"
+
+# If the WSL 2 VM goes rogue and decides not to free
+# up memory, this command will free your memory after about 20-30 seconds.
+#   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
+alias drop_cache="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""

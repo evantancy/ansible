@@ -6,11 +6,11 @@
     state: latest
   loop:
     - git
-    - terminator
     - snapd
     - byobu
     - blueman
     - vim
+    - neovim
     - net-tools
     - gcc
     - wget
@@ -40,16 +40,6 @@
     - update-notifier-common
     - unattended-upgrades
 
-- name: Adding nano settings
-  become: true
-  blockinfile:
-    path: /etc/nanorc
-    marker: "# {mark} USER SETTINGS - ANSIBLE MANAGED BLOCK"
-    block: |
-      set tabsize 4
-      set tabstospaces
-      set softwrap
-
 - name: Adding time stamps to bash history
   blockinfile:
     path: "{{ home_dir }}/.bashrc"
@@ -57,16 +47,6 @@
     block: |
       HISTTIMEFORMAT="%D %l:%M "
       export PATH=$PATH:~/bin
-
-- name: Enabling ttyUSB* and ttyS* permissions
-  become: true
-  blockinfile:
-    path: /etc/udev/rules.d/60-extra-acl.rules
-    marker: "# {mark} USER PERMISSION SETTINGS - ANSIBLE MANAGED BLOCK"
-    block: |
-      KERNEL=="ttyUSB[0-9]*", TAG+="udev-acl", TAG+="uaccess"
-      KERNEL=="ttyS[0-30]*", TAG+="udev-acl", TAG+="uaccess"
-    create: yes
 
 - name: Copy ansible/files/.bash_aliases to ~/.bash_aliases
   copy:

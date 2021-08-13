@@ -1,0 +1,9 @@
+- name: Adding nano settings
+  become: true
+  blockinfile:
+    path: /etc/nanorc
+    marker: "# {mark} NANO SETTINGS - ANSIBLE MANAGED BLOCK"
+    block: |
+      set tabsize 4
+      set tabstospaces
+      set softwrap

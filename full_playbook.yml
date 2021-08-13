@@ -13,6 +13,8 @@
       notify: apt_update
   roles:
     - common
+    - nano
+    - nvidia_drivers
     - terminal_velocity # tools to make you faster
     - git
     - pip
@@ -26,7 +28,9 @@
     - ros
     - julia
     - pytorch
+    # - detectron2
     - docker
+    - nvidia_container
     # Sensor Drivers
     - flycap # For APM
     - baumer # For AQC
@@ -34,6 +38,7 @@
     - robosense
     - linuxcan
     - kvaser
+    - usb_permissions
     # Misc
     - ms_teams
     - zoom

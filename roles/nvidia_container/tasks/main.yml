@@ -1,0 +1,27 @@
+# Install NVIDIA Container Toolkit
+- name: Add nvidia-docker apt repo
+  shell: |
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+      && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+      && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+  notify: apt_update
+
+- meta: flush_handlers
+
+- name: Install NVIDIA Container Toolkit
+  become: true
+  apt:
+    name: "{{ item  }}"
+    state: present
+  loop:
+    - nvidia-docker2
+
+- name: Restart docker service
+  become: true
+  systemd:
+    state: restarted
+    name: docker
+
+# # USE AT YOUR OWN RISK
+# - name: "Add user to docker group, to remove need for sudo"
+#   shell: sudo usermod -aG docker $USER
