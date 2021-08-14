@@ -12,8 +12,8 @@ aid_aws_url: "https://ai-debs.s3.amazonaws.com"
 nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 
 # APT Repositories
-cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
-cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
+cmake_repo: "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ {{ os_release }} main"
+cmake_rc_repo: "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
 docker_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ os_release }} stable"
 ppa_nvidia: "ppa:graphics-drivers/ppa"
 ppa_git: "ppa:git-core/ppa"

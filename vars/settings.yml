@@ -8,4 +8,4 @@ pcan_ver: "8.10.2"
 pycuda_ver: "2020.1"
 julia_ver: "1.5.2"
 torch_ver: "1.7.1+cu110"
-vscode_extensions_install: true
+vscode_extensions_install: false

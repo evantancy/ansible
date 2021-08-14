@@ -35,7 +35,7 @@
     path: /etc/apt/sources.list.d/docker.list
     marker: "# {mark} DOCKER SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ os_release }} stable
+      {{ docker_repo }}
     create: true
   notify: apt_update
 
