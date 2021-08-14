@@ -34,10 +34,10 @@ my_password: "asdfg" #for example
 ## Running playbooks
 
 ### Parsing my_password variable in secrets.yml
-This is ideal since you only need to type your password once. Change `playbook_name.yml` to your desired environment yml file, e.g. `development.yml`, `production_apm.yml` or `production_aqc.yml`
+This is ideal since you only need to type your password once. Change `full_playbook.yml` to your desired environment yml file, e.g. `development.yml`, `production_apm.yml` or `production_aqc.yml`, as `full_playbook.yml` exists to show all options available.
 ```bash
 cd ansible/
-ansible-playbook -v playbook_name.yml --extra-vars "@secrets/secrets.yml" \
+ansible-playbook -v full_playbook.yml --extra-vars "@secrets/secrets.yml" \
 --extra-vars "ansible_sudo_pass={{ my_password }}"
 ```
 

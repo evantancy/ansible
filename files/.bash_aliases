@@ -15,6 +15,7 @@ alias gst="git status"
 alias gcl="git clone"
 alias gpl="git pull"
 alias gps="git push"
+alias lgit="lazygit"
 # for working with virtual environments
 alias ae="activate"
 alias de="deactivate"

@@ -17,6 +17,7 @@ cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
 docker_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ os_release }} stable"
 ppa_nvidia: "ppa:graphics-drivers/ppa"
 ppa_git: "ppa:git-core/ppa"
+ppa_lazygit: "ppa:lazygit-team/release"
 ppa_kvaser: "ppa:astuff/kvaser-linux"
 
 # CMake variables

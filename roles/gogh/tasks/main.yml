@@ -1,0 +1,24 @@
+---
+- name: Install gogh dependencies
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - dconf-cli
+    - uuid-runtime
+
+- name: Check if gogh git repo present
+  stat:
+    path: "{{ install_dir }}/gogh"
+  register: gogh_repo
+
+- name: "Clone gogh repo into {{ install_dir }}"
+  git:
+    repo: "https://github.com/Mayccoll/Gogh.git"
+    dest: "{{ install_dir }}/gogh"
+    clone: true
+  when: gogh_repo.stat.exists == false
+
+- name: Run Gogh installation script, install ALL themes
+  shell: bash files/gogh.sh

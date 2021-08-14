@@ -1,7 +1,7 @@
-- name: Add apt repo for nvidia drivers
+- name: Add apt repo for lazygit
   become: true
   apt_repository:
-    repo: "{{ ppa_nvidia }}"
+    repo: "{{ ppa_lazygit }}"
     state: present
     update_cache: true
   notify:
@@ -10,7 +10,10 @@
 
 - meta: flush_handlers
 
-- name: Install nvidia-drivers
+- name: Install lazygit
   become: true
-  shell: |
-    sudo ubuntu-drivers autoinstall
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - lazygit
