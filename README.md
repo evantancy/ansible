@@ -3,7 +3,6 @@
 # Why does this repository exist?
 So whenever someone old or new needs to reinstall their setup, or configure their machine, they don't have to individually install each component and take ages to get up and running.
 
-
 # Setup
 First make sure you have python3, pip3 and ansible installed
 ```bash
