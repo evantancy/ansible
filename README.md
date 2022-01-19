@@ -8,9 +8,11 @@ So whenever someone old or new needs to reinstall their setup, or configure thei
 
 
 # Setup
-First make sure you have python2 installed
+First make sure you have python3, pip3 and ansible installed
 ```bash
-sudo apt install python3-minimal
+sudo apt install python3-minimal python3-pip
+pip3 install --upgrade pip
+python3 -m pip install ansible
 ```
 
 Then add the Ansible PPA so we can get the latest version of Ansible>=2.9, this enables some features that do not come with Ansible 2.5 that comes with Ubuntu 18.04
@@ -24,7 +26,7 @@ sudo apt update && sudo apt install ansible
 # How to use this repository
 1. Edit settings.yml for different library or driver versions you want.
 2. Place your user password into `ansible/secrets/secrets.yml` (**by default secrets.yml isn't created**) using the following:
-```
+```yaml
 ---
 my_password: "asdfg" #for example
 ```

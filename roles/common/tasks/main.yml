@@ -50,7 +50,7 @@
     marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
       HISTTIMEFORMAT="%D @ %T "
-      export PATH=$PATH:~/bin
+      export PATH=$PATH:~/bin:~/.local/bin
 
       # write Bash history across multiple shells
       export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
