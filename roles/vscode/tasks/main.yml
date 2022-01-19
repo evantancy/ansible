@@ -34,41 +34,25 @@
   loop:
     # General
     - Shan.code-settings-sync
-    - 2gua.rainbow-brackets
-    - fabiospampinato.vscode-diff
-    # Python
-    - eriklynd.json-tools
-    - ms-python.python
-    - njpwerner.autodocstring
-    - KevinRose.vsc-python-indent
-    # C/C++
-    - llvm-vs-code-extensions.vscode-clangd
-    # Ansible
-    - timonwong.ansible-autocomplete
-    # Docker
-    - ms-azuretools.vscode-docker
-    # Markdown
-    - shd101wyy.markdown-preview-enhanced
-    # Themes
-    - sdras.night-owl
-    - ajshortt.tokyo-hack
-    # Bash
-    - timonwong.shellcheck
   when: vscode_extensions_install == true
 
-- name: Download JetBrains Mono font
-  shell: "wget https://download.jetbrains.com/fonts/JetBrainsMono-2.225.zip -P {{ install_dir }} --quiet"
+- name: Run JetBrains Mono install script
+  shell: |
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
 
-- name: Unzip font file
-  unarchive:
-    src: "{{ install_dir }}/JetBrainsMono-2.225.zip"
-    dest: "{{ install_dir }}"
+# - name: Download JetBrains Mono font
+#   shell: "wget https://download.jetbrains.com/fonts/JetBrainsMono-2.225.zip -P {{ install_dir }} --quiet"
 
-- name: Install font-manager
-  become: true
-  apt:
-    name: font-manager
-    state: present
+# - name: Unzip font file
+#   unarchive:
+#     src: "{{ install_dir }}/JetBrainsMono-2.225.zip"
+#     dest: "{{ install_dir }}"
 
-- name: Install
-  shell: "cd {{ install_dir }}/fonts/ttf/ && font-manager -i *"
+# - name: Install font-manager
+#   become: true
+#   apt:
+#     name: font-manager
+#     state: present
+
+# - name: Install
+#   shell: "cd {{ install_dir }}/fonts/ttf/ && font-manager -i *"
