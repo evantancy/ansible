@@ -22,8 +22,6 @@
     - build-essential
     - "linux-headers-{{ os_kernel }}"
     - xz-utils
-    - python
-    - python-dev
     - python3
     - python3-dev
     - python-setuptools
@@ -40,13 +38,25 @@
     - update-notifier-common
     - unattended-upgrades
 
-- name: Adding time stamps to bash history
+- name: Regex-ing certain lines in .bashrc
+  replace:
+    path: "{{ home_dir }}/.bashrc"
+    regexp: "HISTCONTROL=ignoredups:ignorespace"
+    replace: "HISTCONTROL=ignoredups:erasedups"
+
+- name: Adding custom .bashrc settings
   blockinfile:
     path: "{{ home_dir }}/.bashrc"
     marker: "# {mark} USER BASH SETTINGS - ANSIBLE MANAGED BLOCK"
     block: |
-      HISTTIMEFORMAT="%D %l:%M "
+      HISTTIMEFORMAT="%D @ %T "
       export PATH=$PATH:~/bin
+
+      # write Bash history across multiple shells
+      export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+      # max depth = 2 for dirs in terminal
+      export PROMPT_DIRTRIM=2
 
 - name: Copy ansible/files/.bash_aliases to ~/.bash_aliases
   copy:
