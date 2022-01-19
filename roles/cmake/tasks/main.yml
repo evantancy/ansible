@@ -12,7 +12,7 @@
     - software-properties-common
 
 - name: Obtain Kitware signing key using wget
-  shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null"
+  shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
 
 - name: Add apt repo for cmake
   become: true
@@ -33,7 +33,7 @@
     state: present
 
 - name: Remove kitware gpg key
-  shell: sudo rm /usr/share/keyrings/kitware-archive-keyring.gpg
+  shell: sudo rm /etc/apt/trusted.gpg.d/kitware.gpg
 
 - name: Ensure CMake is upgraded
   become: true
