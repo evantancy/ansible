@@ -22,27 +22,27 @@
     - pip
     - sshd
     - cmake
-    - eigen
-    - g2o
-    - cuda
-    - cudnn
-    - tensorrt
-    - ros
-    - julia
-    - pytorch
-    - detectron2
+    # - eigen
+    # - g2o
+    # - cuda
+    # - cudnn
+    # - tensorrt
+    # - ros
+    # - julia
+    # - pytorch
+    # - detectron2
     - docker
-    - nvidia_container
-    # Sensor Drivers
-    - flycap # For APM
-    - baumer # For AQC
-    - peakcan
-    - robosense
-    - linuxcan
-    - kvaser
-    - usb_permissions
+    # - nvidia_container
+    # # Sensor Drivers
+    # - flycap # For APM
+    # - baumer # For AQC
+    # - peakcan
+    # - robosense
+    # - linuxcan
+    # - kvaser
+    # - usb_permissions
     # Misc
     - ms_teams
     - zoom
     - vscode
-    - jetson # For Jetson family devices
+    # - jetson # For Jetson family devices
