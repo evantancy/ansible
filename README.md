@@ -1,37 +1,63 @@
 # ansible
+<hr>
+
+- [ansible](#ansible)
+- [Why does this repository exist?](#why-does-this-repository-exist)
+- [Installation & Setup](#installation--setup)
+  - [pip](#pip)
+  - [apt](#apt)
+- [Usage](#usage)
+- [Playbooks](#playbooks)
+  - [Available Playbooks](#available-playbooks)
+  - [Parsing `my_password` variable in secrets.yml](#parsing-my_password-variable-in-secretsyml)
+  - [With sudo password prompt](#with-sudo-password-prompt)
+- [Viewing Ansible variables](#viewing-ansible-variables)
+- [Notes](#notes)
+- [Included roles & what they do](#included-roles--what-they-do)
+  - [Version checking](#version-checking)
+- [TODO](#todo)
+  - [Roles](#roles)
+
+<hr>
 
 # Why does this repository exist?
 So whenever someone old or new needs to reinstall their setup, or configure their machine, they don't have to individually install each component and take ages to get up and running.
 
-# Setup
+# Installation & Setup
+## pip
 First make sure you have python3, pip3 and ansible installed
 ```bash
 sudo apt install python3-minimal python3-pip
 pip3 install --upgrade pip
-python3 -m pip install ansible
+python3 -m pip install ansible ansible-lint
 ```
-
+## apt
 Then add the Ansible PPA so we can get the latest version of Ansible>=2.9, this enables some features that do not come with Ansible 2.5 that comes with Ubuntu 18.04
 ```bash
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible
 ```
 
+<hr>
 
-
-# How to use this repository
-1. Edit settings.yml for different library or driver versions you want.
-2. Place your user password into `ansible/secrets/secrets.yml` (**by default secrets.yml isn't created**) using the following:
+# Usage
+1. Edit `full_playbook.yml` to include/exclude different packages/libraries.
+2. Edit `./vars/settings.yml` for different versions specifying versions.
+3. Place your user password into `ansible/secrets/secrets.yml` (**by default secrets.yml isn't created**) using the following:
 ```yaml
 ---
 my_password: "asdfg" #for example
 ```
-3. Run specific playbook i.e. playbook.yml that includes different libraries that you want, see [Running Playbooks](#running-playbooks)
+4. Run specific playbook i.e. `full_playbook.yml` that includes different libraries that you want, see [Running Playbooks](#running-playbooks)
 
+<hr>
 
-## Running playbooks
-
-### Parsing my_password variable in secrets.yml
+# Playbooks
+## Available Playbooks
+- full.playbook         (to showcase all available roles)
+- base.yml              (use for a fresh install)
+- sensor_drivers.yml    (use for installing sensor drivers)
+## Parsing `my_password` variable in secrets.yml
 This is ideal since you only need to type your password once. Change `full_playbook.yml` to your desired environment yml file, e.g. `development.yml`, `production_apm.yml` or `production_aqc.yml`, as `full_playbook.yml` exists to show all options available.
 ```bash
 cd ansible/
@@ -39,49 +65,49 @@ ansible-playbook -v full_playbook.yml --extra-vars "@secrets/secrets.yml" \
 --extra-vars "ansible_sudo_pass={{ my_password }}"
 ```
 
-### With sudo password prompt
-Run any playbook in verbose mode aka spam the terminal mode using the following:
+## With sudo password prompt
+Run any playbook in verbose mode using the following:
 ```bash
 cd ansible/
 # --ask-become-pass or -K flag
 # this playbook is meant to show you how to format your own playbooks, it contains all roles within this repo
 # ansible-playbook -v --ask-become-pass full_playbook.yml
 # other examples
-ansible-playbook -v -K development.yml
-ansible-playbook -v -K production_apm.yml
-ansible-playbook -v -K production_aqc.yml
+ansible-playbook -vvv -K full_playbook.yml
 ```
 
+<hr>
 
-
-# Viewing ansible facts
-To view all Ansible related variables for a specific host run:
+# Viewing Ansible variables
+To view all Ansible related variables, also known as Ansible facts, for a specific host run:
 ```bash
 ansible -m setup hostname
-ansible -m setup localhost # e.g. for localhost
+# e.g. for localhost
+ansible -m setup localhost
+# save to txt file
 ansible -m setup localhost > ansible_facts_saved.txt
 ```
 
-
+<hr>
 
 # Notes
 - Ansible tasks and roles are procedural.
 - Think of a playbook as a recipe, and roles are flavours to that recipe. Using this you can create production/development playbooks, and even use playbooks within playbooks.
 - All downloaded files will be downloaded to `~/install_dir`
 - when running `sudo make install` add the `--debug=basic` argument so the status is printed at the end when running ansible playbooks in verbose mode i.e. `ansible-playbook -v some_playbook.yml`, since you probably can't read all the lines.
-- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is **will break unless** you specify the retries/timeouts.
+- use `wget` instead of builtin ansible `get_url` module, as wget has automatic retries, `get_url` is __will break unless you specify the retries/timeouts.__
 - Currently, files being downloaded from the URL set in the variable aid_aws_url are ...
-    - Baumer SDK (baumer_deb_file)
-    - CUDA Toolkit (cuda_deb_file)
-    - cuDNN Runtime Library (cudnn_runtime_deb_file)
+    - Baumer SDK                (baumer_deb_file)
+    - CUDA Toolkit              (cuda_deb_file)
+    - cuDNN Runtime Library     (cudnn_runtime_deb_file)
     - cuDNN Development Library (cudnn_devel_deb_file)
-    - TensorRT (tensorrt_deb_file)
-- Handlers e.g. apt_update, by default, are only triggered at the end of any `tasks/main.yml` file. In order to trigger handlers immediately, use meta tasks in role_name/tasks/main.yml e.g.`- meta: flush_handlers`
+    - TensorRT                  (tensorrt_deb_file)
+- Handlers e.g. apt_update, by default, are only triggered at the end of any `tasks/main.yml` file. In order to trigger handlers immediately, use meta tasks in `role_name/tasks/main.yml` e.g.`- meta: flush_handlers` in order to trigger them.
 - Define role dependencies in any role using the `meta` folder, see the **g2o role** for example.
 
+<hr>
 
-
-# Roles included
+# Included roles & what they do
 - baumer:
     - download baumer deb file from AWS if not present
     - install baumer SDK via .deb
@@ -213,6 +239,8 @@ ansible -m setup localhost > ansible_facts_saved.txt
 - peakcan driver
 - peakcan API
 
+<hr>
+
 # TODO
 ## Roles
 - jetson -> complete role
@@ -223,9 +251,3 @@ ansible -m setup localhost > ansible_facts_saved.txt
 - vcstool
 - peakcan (pcan) API
 - diagnostics i.e. download different code samples, and libraries to check that stuff is working
-
-## Playbooks
-- development & production (APM/AQC)
-- further split into playbooks
-    - drivers
-    - tooling
