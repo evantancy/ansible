@@ -1,4 +1,3 @@
 ---
 - name: Install PyTorch
   shell: "pip3 install torch=={{ torch_ver }} torchvision=={{ torch_ver_dict[torch_ver][\"torchvision_ver\"] }} torchaudio==={{ torch_ver_dict[torch_ver][\"torchaudio_ver\"] }} -f https://download.pytorch.org/whl/torch_stable.html"
-

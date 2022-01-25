@@ -7,7 +7,7 @@
     success_msg: "{{ cuda_tk_ver }} exists in cuda_tk_dict"
 
 - name: Download cuda preferences file
-  shell: "wget {{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }} -P {{ install_dir }} --quiet"
+  shell: "wget {{ cuda_apt_pref_pin_url  }} -P {{ install_dir }} --quiet"
 
 - name: Add cuda preferences to apt
   become: true

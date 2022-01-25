@@ -5,7 +5,7 @@
   register: baumer_deb
 
 - name: "Download {{ baumer_deb_file }}"
-  shell: "wget {{ aid_aws_url }}/{{ baumer_deb_file }} -P {{ install_dir }} --quiet"
+  shell: "wget {{ baumer_deb_url  }} -P {{ install_dir }} --quiet"
   when: baumer_deb.stat.exists == false
 
 - name: Install Baumer

@@ -14,8 +14,9 @@ nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 # APT Repositories
 cmake_repo: "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ {{ os_release }} main"
 cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
-
 docker_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ os_release }} stable"
+
+# PPA
 ppa_nvidia: "ppa:graphics-drivers/ppa"
 ppa_git: "ppa:git-core/ppa"
 ppa_lazygit: "ppa:lazygit-team/release"
@@ -51,11 +52,14 @@ cuda_tk_dict:
   "11.5.1":
     apt_ver: "11-5"
     nvidia_driver: "495.29.05"
-cuda_apt_pref_pin: "cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
-cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
-cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
+
 cuda_apt_pkg: "cuda-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
 cuda_tk_apt_pkg: "cuda-toolkit-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}"
+cuda_apt_pref_pin: "cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
+cuda_apt_pref_pin_url: "{{ nvidia_url }}/repos/{{ os_distro }}{{ os_distro_ver }}/{{ arch }}/{{ cuda_apt_pref_pin }}"
+cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
+cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
+
 
 # cuDNN variables
 cuda_symlink_dir: "/usr/local/cuda-{{ cuda_tk_ver[:4] }}/targets/x86_64-linux/lib"
@@ -86,7 +90,6 @@ pcan_url: "https://www.peak-system.com/fileadmin/media/linux/files/peak-linux-dr
 # Julia variables
 julia_file: "julia-{{ julia_ver }}-linux-{{ arch }}.tar.gz"
 julia_git_tag: "v{{ julia_ver }}"
-julia_init_setup_file: "ONEinitialsetup.jl" # located in ansible/files/
 
 # Flycap variables
 flycap_ver: "2.13.3.31"
@@ -94,6 +97,7 @@ flycap_file: "flycapture2-{{ flycap_ver }}-amd64.tar.gz"
 
 # Baumer variables
 baumer_deb_file: "baumer-gapi-sdk-linux-v2.10.1-gcc-4.8-x86-64.deb"
+baumer_deb_url: "{{ aid_aws_url }}/{{ baumer_deb_file }}"
 
 # PyTorch variables
 torch_ver_dict:

@@ -32,7 +32,6 @@
 - name: Install vscode extensions
   shell: "code --install-extension {{ item }}"
   loop:
-    # General
     - Shan.code-settings-sync
   when: vscode_extensions_install == true
 
