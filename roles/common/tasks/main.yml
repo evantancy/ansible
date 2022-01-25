@@ -3,7 +3,7 @@
   become: true
   apt:
     name: "{{ item }}"
-    state: latest
+    state: present
   loop:
     - git
     - snapd
@@ -27,6 +27,12 @@
     - python-setuptools
     - libboost-python-dev
     - libboost-thread-dev
+
+- name: Install node version manager (nvm)
+  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+
+- name: Install nodejs
+  shell: nvm install node
 
 - name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
