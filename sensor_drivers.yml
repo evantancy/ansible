@@ -1,0 +1,21 @@
+---
+- name: Executing playbook.yml
+  hosts: localhost
+  vars_files:
+    - vars/settings.yml
+    - vars/defaults.yml
+    - secrets/secrets.yml
+  handlers:
+    - include: handlers/apt_handlers.yml
+  pre_tasks:
+    - name: Trigger apt_update
+      shell: echo ""
+      notify: apt_update
+  roles:
+    - flycap
+    - baumer
+    - peakcan
+    - robosense
+    - linuxcan
+    - kvaser
+    - usb_permissions
