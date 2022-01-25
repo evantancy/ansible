@@ -31,11 +31,3 @@
     src: "/opt/julia-{{ julia_ver }}/bin/julia"
     dest: "/usr/local/bin/julia"
     state: link
-
-- name: "Copy {{ julia_init_setup_file }} to {{ install_dir }}"
-  copy:
-    src: "files/{{ julia_init_setup_file }}"
-    dest: "{{ install_dir }}"
-
-- name: "Execute {{ julia_init_setup_file }}"
-  shell: "julia {{ install_dir }}/{{ julia_init_setup_file }}"
