@@ -1,46 +1,51 @@
 ---
-- name: Install cmake related apt packages
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - wget
-    - apt-transport-https
-    - ca-certificates
-    - gnupg
-    - software-properties-common
-
-- name: Obtain Kitware signing key using wget
-  shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
-
-- name: Add apt repo for cmake
-  become: true
-  apt_repository:
-    repo: "{{ cmake_repo }}"
-    state: present
-    update_cache: true
-  notify:
-    - post_add_apt_handler
-    - apt_update
-
-- meta: flush_handlers
-
-- name: Install kitware-archive-keyring apt package
-  become: true
-  apt:
-    name: kitware-archive-keyring
-    state: present
-
-- name: Remove kitware gpg key
-  shell: sudo rm /etc/apt/trusted.gpg.d/kitware.gpg
-
-- name: Ensure CMake is upgraded
-  become: true
-  apt:
+- name: Upgrade python3 pip
+  pip:
     name: cmake
-    state: latest
-  register: upgrade_cmake_status
-  until: upgrade_cmake_status is success
-  delay: 1
-  retries: 3
+    executable: pip3
+# PUBKEY ERRORS
+# - name: Install cmake related apt packages
+#   become: true
+#   apt:
+#     name: "{{ item }}"
+#     state: present
+#   loop:
+#     - wget
+#     - apt-transport-https
+#     - ca-certificates
+#     - gnupg
+#     - software-properties-common
+
+# - name: Obtain Kitware signing key using wget
+#   shell: "wget -O - {{ kitware_gpg_key }} 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null"
+
+# - name: Add apt repo for cmake
+#   become: true
+#   apt_repository:
+#     repo: "{{ cmake_repo }}"
+#     state: present
+#     update_cache: true
+#   notify:
+#     - post_add_apt_handler
+#     - apt_update
+
+# - meta: flush_handlers
+
+# - name: Remove kitware gpg key
+#   shell: sudo rm /usr/share/keyrings/kitware-archive-keyring.gpg
+
+# - name: Install kitware-archive-keyring apt package
+#   become: true
+#   apt:
+#     name: kitware-archive-keyring
+#     state: present
+
+# - name: Ensure CMake is upgraded
+#   become: true
+#   apt:
+#     name: cmake
+#     state: latest
+#   register: upgrade_cmake_status
+#   until: upgrade_cmake_status is success
+#   delay: 1
+#   retries: 3

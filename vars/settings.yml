@@ -1,5 +1,5 @@
 ---
-cuda_tk_ver: "11.0.2"
+cuda_tk_ver: "11.5.1"
 cudnn_ver: "8.0.5.39"
 eigen_ver: "3.3.9"
 tensorrt_ver: "7.2.1.6"

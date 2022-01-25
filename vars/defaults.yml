@@ -12,7 +12,7 @@ aid_aws_url: "https://ai-debs.s3.amazonaws.com"
 nvidia_url: "https://developer.download.nvidia.com/compute/cuda"
 
 # APT Repositories
-cmake_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }} main"
+cmake_repo: "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ {{ os_release }} main"
 cmake_rc_repo: "deb https://apt.kitware.com/ubuntu/ {{ os_release }}-rc main"
 
 docker_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ os_release }} stable"
@@ -45,6 +45,12 @@ cuda_tk_dict:
     apt_ver: "11-0"
     nvidia_driver: "450.51.05"
     cudnn_ver: "8.0.5.39"
+  "11.5.0":
+    apt_ver: "11-5"
+    nvidia_driver: "495.29.05"
+  "11.5.1":
+    apt_ver: "11-5"
+    nvidia_driver: "495.29.05"
 cuda_apt_pref_pin: "cuda-{{ os_distro }}{{ os_distro_ver }}.pin"
 cuda_deb_file: "cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local_{{ cuda_tk_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"nvidia_driver\"] }}-1_amd64.deb"
 cuda_apt_key: "/var/cuda-repo-{{ os_distro }}{{ os_distro_ver }}-{{ cuda_tk_dict[cuda_tk_ver][\"apt_ver\"] }}-local/7fa2af80.pub"
