@@ -16,6 +16,7 @@
     - gogh
     - nano
     - nvidia_drivers
+    - cuda
     - terminal_velocity
     - git
     - lazygit
