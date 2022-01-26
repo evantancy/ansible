@@ -21,4 +21,6 @@ alias ae="activate"
 alias de="deactivate"
 alias cae="conda activate"
 alias cde="conda deactivate"
+alias pbcopy="xsel --output --input"
+alias pbpaste="xsel --output --output"
 # ANSIBLE MANAGED FILE
