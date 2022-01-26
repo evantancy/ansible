@@ -47,7 +47,7 @@
 - name: Regex-ing certain lines in .bashrc
   replace:
     path: "{{ home_dir }}/.bashrc"
-    regexp: "HISTCONTROL=ignoredups:ignorespace"
+    regexp: "HISTCONTROL=ignoredup*"
     replace: "HISTCONTROL=ignoredups:erasedups"
 
 - name: Adding custom .bashrc settings
@@ -78,3 +78,15 @@
   file:
     path: ~/bin
     state: directory
+
+- name: Configure bluetooth
+  become: True
+  replace:
+    path: "/lib/systemd/system/bluetooth.service"
+    regexp: "ExecStart=/usr/lib/bluetooth/bluetoothd*"
+    replace: "ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=avrcp"
+
+- name: Restart bluetooth service
+  service:
+    name: bluetooth.service
+    state: reloaded
