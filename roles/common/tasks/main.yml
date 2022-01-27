@@ -28,6 +28,7 @@
     - libboost-python-dev
     - libboost-thread-dev
 
+
 - name: Install node version manager (nvm)
   shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
@@ -78,6 +79,11 @@
   file:
     path: ~/bin
     state: directory
+
+- name: Placing some scripts in ~/bin
+  copy:
+    src: files/scripts/*.sh
+    dest: ~/bin
 
 - name: Configure bluetooth
   become: True
