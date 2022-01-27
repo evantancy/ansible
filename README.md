@@ -16,7 +16,6 @@
 - [Included roles & what they do](#included-roles--what-they-do)
   - [Version checking](#version-checking)
 - [TODO](#todo)
-  - [Roles](#roles)
 
 <hr>
 
@@ -242,7 +241,6 @@ ansible -m setup localhost > ansible_facts_saved.txt
 <hr>
 
 # TODO
-## Roles
 - jetson -> complete role
 - xrdp #For remote access
 - ifenslave
@@ -251,3 +249,6 @@ ansible -m setup localhost > ansible_facts_saved.txt
 - vcstool
 - peakcan (pcan) API
 - diagnostics i.e. download different code samples, and libraries to check that stuff is working
+
+- use ansible molecule for testing
+-
