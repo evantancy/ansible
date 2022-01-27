@@ -24,9 +24,6 @@
     - xz-utils
     - python3
     - python3-dev
-    - python-setuptools
-    - libboost-python-dev
-    - libboost-thread-dev
 
 
 - name: Install node version manager (nvm)
