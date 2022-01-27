@@ -22,3 +22,4 @@
 
 - name: Run Gogh installation script, install ALL themes
   shell: bash files/gogh.sh
+  when: gogh_repo.stat.exists == false

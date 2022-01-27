@@ -7,7 +7,7 @@
 - name: Install flycap script dependencies
   pip:
     name: pexpect
-    executable: pip2
+    executable: pip3
 
 - name: Install Flycap related apt packages
   become: true

@@ -35,6 +35,7 @@
 - meta: flush_handlers
 
 - name: Ensure Git is upgraded
+  become: true
   apt:
     name: git
     state: latest

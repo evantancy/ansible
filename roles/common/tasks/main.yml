@@ -33,7 +33,10 @@
   shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
 - name: Install nodejs
-  shell: nvm install node
+  shell: |
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm install node
 
 - name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
@@ -81,9 +84,8 @@
     state: directory
 
 - name: Placing some scripts in ~/bin
-  copy:
-    src: files/scripts/*.sh
-    dest: ~/bin
+  shell: |
+    cp `find ./files/scripts/ -name "*.sh" | tr '\n' ' '` ~/bin
 
 - name: Configure bluetooth
   become: True
@@ -93,6 +95,8 @@
     replace: "ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=avrcp"
 
 - name: Restart bluetooth service
+  become: True
   service:
     name: bluetooth.service
-    state: reloaded
+    state: restarted
+
