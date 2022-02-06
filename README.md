@@ -1,7 +1,6 @@
 # ansible
 <hr>
 
-- [ansible](#ansible)
 - [Why does this repository exist?](#why-does-this-repository-exist)
 - [Installation & Setup](#installation--setup)
   - [pip](#pip)
@@ -40,7 +39,7 @@ sudo apt update && sudo apt install ansible
 <hr>
 
 # Usage
-1. Edit `full_playbook.yml` to include/exclude different packages/libraries.
+1. Select playbook of choice, see [playbooks](#playbooks)
 2. Edit `./vars/settings.yml` for different versions specifying versions.
 3. Place your user password into `ansible/secrets/secrets.yml` (**by default secrets.yml isn't created**) using the following:
 ```yaml
