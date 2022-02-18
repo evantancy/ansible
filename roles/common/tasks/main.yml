@@ -33,7 +33,7 @@
   shell: |
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    nvm install node
+    nvm install --lts
 
 - name: Uninstall update-notifier apt packages, and unattended-upgrades
   become: true
