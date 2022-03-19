@@ -1,4 +1,15 @@
 ---
+- name: Add apt repo for neovim
+  become: true
+  apt_repository:
+    repo: "{{ ppa_neovim }}"
+    state: present
+    update_cache: true
+  notify:
+    - post_add_apt_handler
+    - apt_update
+    - apt_upgrade
+
 - name: Install some common apt packages
   become: true
   apt:
