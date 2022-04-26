@@ -10,6 +10,8 @@
     - apt_update
     - apt_upgrade
 
+- meta: flush_handlers
+
 - name: Install some common apt packages
   become: true
   apt:
